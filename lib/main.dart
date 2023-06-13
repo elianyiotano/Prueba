@@ -15,13 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Jogo',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'splash',
+      initialRoute: 'home',
       routes: {
         'home': (_) => HomePage(),
         'notification': (_) => NotificationPage(),
         'profile': (_) => ProfilePage(),
         'qr': (_) => QrPage(),
-        'splash':(_) => SplashPage()
       },
       theme: ThemeData.light(),
     );
