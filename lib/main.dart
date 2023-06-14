@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
+import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
 import 'package:jogo_mobile_app/pages/home_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         'profile': (_) => ProfilePage(),
         'qr': (_) => QrPage(),
         'signin': (_) => SignIn(),
+        'signup': (_) => SignUp(),
       },
       theme: ThemeData.light(),
     );
