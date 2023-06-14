@@ -4,6 +4,16 @@
             "outputFile": "com.example.jogo_mobile_app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
+                    "source": "/Users/brandiotanoromero/Desktop/jogo-mobile-app/android/app/src/main/res/values-night/color.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "41",
+                        "endOffsets": "92"
+                    }
+                },
+                {
                     "source": "/Users/brandiotanoromero/Desktop/jogo-mobile-app/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
@@ -14,12 +24,12 @@
                         "endOffsets": "475,981"
                     },
                     "to": {
-                        "startLines": "2,6",
+                        "startLines": "3,7",
                         "startColumns": "4,4",
-                        "startOffsets": "55,236",
-                        "endLines": "5,8",
+                        "startOffsets": "97,278",
+                        "endLines": "6,9",
                         "endColumns": "12,12",
-                        "endOffsets": "231,400"
+                        "endOffsets": "273,442"
                     }
                 }
             ]
