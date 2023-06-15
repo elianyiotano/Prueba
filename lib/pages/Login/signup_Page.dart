@@ -70,6 +70,7 @@ class SignUp extends StatelessWidget {
 
                 const SizedBox(height: 10),
                 const SizedBox(height: 25),
+                const ButtonGlobal(),
                 const SocialLogin(),
               ],
             ),
