@@ -9,8 +9,6 @@ class SignUp extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +29,7 @@ class SignUp extends StatelessWidget {
                     width: 300,
                   ),
                 ),
-                
+
                 const SizedBox(height: 15),
 
                 //NameInput
@@ -71,7 +69,6 @@ class SignUp extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 10),
-                const ButtonGlobal(),
                 const SizedBox(height: 25),
                 const SocialLogin(),
               ],

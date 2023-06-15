@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TextFormGlobal extends StatelessWidget {
-  const TextFormGlobal({super.key, required this.controller, required this.text, required this.textInputType, required this.obscure});
+  const TextFormGlobal(
+      {super.key,
+      required this.controller,
+      required this.text,
+      required this.textInputType,
+      required this.obscure});
   final TextEditingController controller;
   final String text;
   final TextInputType textInputType;
@@ -23,14 +28,11 @@ class TextFormGlobal extends StatelessWidget {
         controller: controller,
         keyboardType: textInputType,
         obscureText: obscure,
-        decoration:  InputDecoration(
+        decoration: InputDecoration(
             hintText: text,
             border: InputBorder.none,
             contentPadding: const EdgeInsets.all(0),
-            hintStyle: const TextStyle(
-              height: 1
-            )),
-            
+            hintStyle: const TextStyle(height: 1)),
       ),
     );
   }

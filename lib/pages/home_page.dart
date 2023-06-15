@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/custom_navigatorbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,13 +6,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Upcoming events',
-          style: TextStyle(
-            color: Colors.black,
-             // Establecer el color del texto como negro
-          ),
-          textAlign: TextAlign.left,
+        automaticallyImplyLeading: false, // Quitar el botón de retroceso por defecto
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Upcoming events',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ],
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
