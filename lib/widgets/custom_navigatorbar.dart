@@ -1,44 +1,40 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/providers/ui_providers.dart';
+import 'package:provider/provider.dart';
 
-class CustomNavigationBar extends StatefulWidget {
-  @override
-  _CustomNavigationBarState createState() => _CustomNavigationBarState();
-}
-
-class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  int _currentIndex = 0;
+class CustomNavigationBar extends StatelessWidget {
+  const CustomNavigationBar({super.key});
   @override
   Widget build(BuildContext context) {
+    final uiProviders = Provider.of<UiProviders>(context);
+
+    final currentIndex = uiProviders.selectedMenuOpt;
+
     return BottomNavigationBar(
-      onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-      currentIndex: _currentIndex,
+      onTap: (int i) => uiProviders.selectedMenuOpt = i,
+      currentIndex: currentIndex,
+      elevation: 0,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Color.fromRGBO(49, 220, 118, 1),
+      selectedItemColor: const Color.fromRGBO(49, 220, 118, 1),
       unselectedItemColor: Colors.black,
-      items: <BottomNavigationBarItem>[
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
-          label: 'Home',
+          label: 'Inicio',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_month_outlined),
-          label: 'Events',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.qr_code_2_outlined),
-          label: 'QR',
+          icon: Icon(Icons.home_outlined),
+          label: 'Eventos',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications_active_outlined),
-          label: 'Notifications',
+          label: 'Notificaciones',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person_2_outlined),
-          label: 'Profile',
+          label: 'Perfil',
         ),
       ],
     );

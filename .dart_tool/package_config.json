@@ -116,6 +116,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///Users/brandiotanoromero/.pub-cache/hosted/pub.dev/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///Users/brandiotanoromero/.pub-cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
@@ -132,6 +138,12 @@
       "rootUri": "file:///Users/brandiotanoromero/.pub-cache/hosted/pub.dev/petitparser-5.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///Users/brandiotanoromero/.pub-cache/hosted/pub.dev/provider-6.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "sky_engine",
@@ -212,7 +224,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-06-14T22:00:44.211861Z",
+  "generated": "2023-06-16T20:17:44.839705Z",
   "generator": "pub",
   "generatorVersion": "3.0.2"
 }

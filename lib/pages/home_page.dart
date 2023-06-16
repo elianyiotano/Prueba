@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/pages/events_page.dart';
+import 'package:jogo_mobile_app/pages/notification_page.dart';
+import 'package:jogo_mobile_app/pages/profile_page.dart';
+import 'package:jogo_mobile_app/providers/ui_providers.dart';
+import 'package:jogo_mobile_app/widgets/scan_button.dart';
+import 'package:provider/provider.dart';
 import '../widgets/custom_navigatorbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,8 +12,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Quitar el botón de retroceso por defecto
-        title: Row(
+        automaticallyImplyLeading: false,
+        title: const Row(
           children: [
             Expanded(
               child: Text(
@@ -23,128 +29,32 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset('assets/images/prueba.png'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: _HomePageBody(),
       bottomNavigationBar: CustomNavigationBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: ScanButton(),
     );
+  }
+}
+
+class _HomePageBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //obtener el selected menu opt
+    final uiProviders = Provider.of<UiProviders>(context);
+    final currentIndex = uiProviders.selectedMenuOpt;
+
+    switch (currentIndex) {
+      case 0:
+        return EventsPage();
+      case 1:
+        return EventsPage();
+      case 2:
+        return NotificationPage();
+      case 3:
+        return ProfilePage();
+      default:
+        return EventsPage();
+    }
   }
 }
