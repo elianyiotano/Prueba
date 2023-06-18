@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Upcoming events',
+                'Próximos eventos',
                 style: TextStyle(
                   color: Colors.black,
                 ),

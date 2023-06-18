@@ -57,7 +57,7 @@ class SignIn extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return SuccessModal(
+                          return const SuccessModal(
                             title: 'Successful validation',
                             description:
                                 'Printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
