@@ -5,9 +5,11 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
-      elevation: 0,),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -206,7 +208,9 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10), // Espacio entre el contenedor del progreso y el texto "Recently activity"
+          SizedBox(
+              height:
+                  10), // Espacio entre el contenedor del progreso y el texto "Recently activity"
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -222,13 +226,16 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10), // Espacio entre el texto "Recently activity" y la lista de actividades
+          SizedBox(
+              height:
+                  10), // Espacio entre el texto "Recently activity" y la lista de actividades
           Expanded(
             child: ListView.builder(
               itemCount: 3,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   child: Row(
                     children: [
                       Container(
