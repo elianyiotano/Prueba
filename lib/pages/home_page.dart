@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/pages/detail_page.dart';
 import 'package:jogo_mobile_app/pages/events_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
