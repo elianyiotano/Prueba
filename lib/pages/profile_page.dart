@@ -5,9 +5,12 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
+      elevation: 0,),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [// Espacio en blanco arriba
+        children: [
           Center(
             child: Container(
               width: 100,

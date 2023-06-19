@@ -4,6 +4,24 @@ class EventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Próximos eventos',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
         child: SingleChildScrollView(
@@ -128,4 +146,3 @@ class EventsPage extends StatelessWidget {
     );
   }
 }
-
