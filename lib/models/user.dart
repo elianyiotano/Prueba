@@ -1,16 +1,28 @@
+import 'activity.dart';
+
 class UserData {
   User? user;
+  List<Activity>? activities;
 
   UserData({this.user});
 
   UserData.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    if (json['activities'] != null) {
+      activities = <Activity>[];
+      json['activities'].forEach((v) {
+        activities!.add(new Activity.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.user != null) {
       data['user'] = this.user!.toJson();
+    }
+    if (this.activities != null) {
+      data['activities'] = this.activities!.map((v) => v.toJson()).toList();
     }
     return data;
   }
