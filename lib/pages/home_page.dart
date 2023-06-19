@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/events_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
+import 'package:jogo_mobile_app/pages/ranking_page.dart';
 import 'package:jogo_mobile_app/providers/ui_providers.dart';
 import 'package:jogo_mobile_app/widgets/scan_button.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +53,7 @@ class _HomePageBody extends StatelessWidget {
       case 1:
         return EventsPage();
       case 2:
-        return NotificationPage();
+        return RankingPage();
       case 3:
         return ProfilePage();
       default:

@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
@@ -6,6 +7,7 @@ import 'package:jogo_mobile_app/pages/home_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
 import 'package:jogo_mobile_app/pages/qr_page.dart';
+import 'package:jogo_mobile_app/pages/ranking_page.dart';
 import 'package:jogo_mobile_app/providers/ui_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
           'qr': (_) => QrPage(),
           'signin': (_) => SignIn(),
           'signup': (_) => SignUp(),
+          'ranking': (_) => RankingPage(),
         },
         theme: ThemeData(
           primaryColor: Color.fromRGBO(49, 220, 118, 1.0),
