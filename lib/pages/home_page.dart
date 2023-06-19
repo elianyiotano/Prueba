@@ -35,7 +35,7 @@ class _HomePageBody extends StatelessWidget {
       case 1:
         return EventsPage();
       case 2:
-        return RankingPage();
+        return NotificationPage();
       case 3:
         return ProfilePage();
       default:
