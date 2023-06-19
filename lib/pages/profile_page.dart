@@ -210,7 +210,7 @@ class ProfilePage extends StatelessWidget {
           ),
           SizedBox(
               height:
-                  10), // Espacio entre el contenedor del progreso y el texto "Recently activity"
+                  10), 
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -228,7 +228,7 @@ class ProfilePage extends StatelessWidget {
           ),
           SizedBox(
               height:
-                  10), // Espacio entre el texto "Recently activity" y la lista de actividades
+                  10), 
           Expanded(
             child: ListView.builder(
               itemCount: 3,
