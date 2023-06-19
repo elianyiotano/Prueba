@@ -86,6 +86,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/Developer/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "js",
       "rootUri": "file:///C:/Users/Developer/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
       "packageUri": "lib/",
@@ -176,6 +182,18 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "syncfusion_flutter_core",
+      "rootUri": "file:///C:/Users/Developer/AppData/Local/Pub/Cache/hosted/pub.dev/syncfusion_flutter_core-21.2.10",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "syncfusion_flutter_gauges",
+      "rootUri": "file:///C:/Users/Developer/AppData/Local/Pub/Cache/hosted/pub.dev/syncfusion_flutter_gauges-21.2.10",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "term_glyph",
       "rootUri": "file:///C:/Users/Developer/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
       "packageUri": "lib/",
@@ -224,7 +242,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-06-19T02:16:20.629407Z",
+  "generated": "2023-06-19T04:11:40.799842Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }
