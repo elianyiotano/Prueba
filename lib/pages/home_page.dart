@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/pages/detail_page.dart';
 import 'package:jogo_mobile_app/pages/events_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
@@ -14,7 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _HomePageBody(),
+      body: SafeArea(
+        child: _HomePageBody(),
+      ),
       bottomNavigationBar: CustomNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ScanButton(),
@@ -35,7 +36,7 @@ class _HomePageBody extends StatelessWidget {
       case 1:
         return EventsPage();
       case 2:
-        return RankingPage();
+        return NotificationPage();
       case 3:
         return ProfilePage();
       default:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/widgets/button.global.dart';
+import 'package:jogo_mobile_app/widgets/button_sign_up.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 
@@ -70,7 +70,7 @@ class SignUp extends StatelessWidget {
 
                 const SizedBox(height: 10),
                 const SizedBox(height: 25),
-                const ButtonGlobal(),
+                const ButtonSignUp(),
                 const SocialLogin(),
               ],
             ),
