@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Jogo',
         debugShowCheckedModeBanner: false,
-        initialRoute: 'forgotpassword',
+        initialRoute: 'signin',
         routes: {
           'home': (_) => HomePage(),
           'notification': (_) => NotificationPage(),
