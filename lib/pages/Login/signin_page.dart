@@ -1,13 +1,29 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/main.dart';
+import 'package:jogo_mobile_app/models/user.dart';
+import 'package:jogo_mobile_app/routes.gr.dart';
+import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/button.global.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
+import 'package:flutter/material.dart';
 
 import '../../widgets/success_modal.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  String email = "";
+  String password = "";
+  UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +70,7 @@ class SignIn extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SuccessModal(
-                            title: 'Successful validation',
-                            description:
-                                'Printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
-                          );
-                        },
-                      );
+                      loginUsers(context);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
@@ -108,5 +115,52 @@ class SignIn extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> loginUsers(context) async {
+    if (true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Iniciando sesión...'),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+
+      Response response = await userService.login(
+        email,
+        password,
+      );
+      dynamic res = response.data;
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      }
+
+      print(res);
+
+      if (res['error'] == null && res["token"]) {
+        if (mounted) {
+          var authService = MyApp.of(context as BuildContext).authService;
+          authService.authenticated = true;
+          authService.email = email;
+          authService.token_auth =
+              response.headers.value("Authorization") ?? "";
+          MyApp.of(context).userData = UserData.fromJson(res);
+          AutoRouter.of(context).replace(const HomeRoute());
+        }
+      } else {
+        dynamic errors = res['error'];
+        String castedErrors = errors.toString();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const FailedModal(
+              title: 'Error',
+              description:
+                  'Printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
+            );
+          },
+        );
+      }
+    }
   }
 }
