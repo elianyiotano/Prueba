@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/pages/Login/change_password_page.dart';
+import 'package:jogo_mobile_app/pages/Login/forgot_password.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
 import 'package:jogo_mobile_app/pages/home_page.dart';
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Jogo',
         debugShowCheckedModeBanner: false,
-        initialRoute: 'signin',
+        initialRoute: 'forgotpassword',
         routes: {
           'home': (_) => HomePage(),
           'notification': (_) => NotificationPage(),
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
           'signin': (_) => SignIn(),
           'signup': (_) => SignUp(),
           'ranking': (_) => RankingPage(),
+          'changepassword': (_) => ChangePasswordPage(),
+          'forgotpassword': (_) => ForgotPassword(),
+
         },
         theme: ThemeData(
           primaryColor: Color.fromRGBO(49, 220, 118, 1.0),
