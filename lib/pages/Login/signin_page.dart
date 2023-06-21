@@ -21,8 +21,6 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  String email = "";
-  String password = "";
   UserService userService = UserService();
 
   @override
@@ -127,21 +125,19 @@ class _SignInState extends State<SignIn> {
       );
 
       Response response = await userService.login(
-        email,
-        password,
+        emailController.text,
+        passwordController.text,
       );
       dynamic res = response.data;
       if (mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
       }
 
-      print(res);
-
-      if (res['error'] == null && res["token"]) {
+      if (res['error'] == null && res["token"] != "") {
         if (mounted) {
           var authService = MyApp.of(context as BuildContext).authService;
           authService.authenticated = true;
-          authService.email = email;
+          authService.email =  emailController.text;
           authService.token_auth =
               response.headers.value("Authorization") ?? "";
           MyApp.of(context).userData = UserData.fromJson(res);
@@ -154,9 +150,9 @@ class _SignInState extends State<SignIn> {
           context: context,
           builder: (BuildContext context) {
             return const FailedModal(
-              title: 'Error',
+              title: 'Error de inicio de sesión',
               description:
-                  'Printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
+                  'Usuario o contraseña incorrecta. Por favor, ingrese su usuario y contraseña correcto.',
             );
           },
         );

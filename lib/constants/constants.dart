@@ -1,6 +1,6 @@
 class ApiConstants {
-  static String baseUrl = 'http://localhost:3000';
-  static String singInEndpoint = '/api/auth/sign_in';
+  static String baseUrl = 'https://run.mocky.io/v3';
+  static String singInEndpoint = '/a5e013c1-91db-43bf-8538-1bb4296fc056';
   static String singUpEndpoint = '/api/auth/';
   static String sendResetPasswordEmail = '/api/auth/password';
 
