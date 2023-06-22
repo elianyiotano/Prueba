@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/user.dart';
+import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/button.global.dart';
@@ -97,14 +98,16 @@ class _SignInState extends State<SignIn> {
         height: 50,
         color: Colors.white,
         alignment: Alignment.center,
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Don\'t have an account?'),
-            InkWell(
-              child: Text(
-                'Sign Up',
-                style: TextStyle(
+            TextButton(
+              onPressed: (){
+                Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+              },
+              child: Text("Sign Up", style: TextStyle(
                   color: Color.fromRGBO(49, 220, 118, 1.0),
                 ),
               ),
@@ -118,9 +121,10 @@ class _SignInState extends State<SignIn> {
   Future<void> loginUsers(context) async {
     if (true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Iniciando sesión...'),
-          duration: const Duration(seconds: 5),
+        const SnackBar(
+          content: Text('Iniciando sesión...'),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.green,
         ),
       );
 
@@ -135,9 +139,9 @@ class _SignInState extends State<SignIn> {
 
       if (res['error'] == null && res["token"] != "") {
         if (mounted) {
-          var authService = MyApp.of(context as BuildContext).authService;
+          var authService = MyApp.of(context).authService;
           authService.authenticated = true;
-          authService.email =  emailController.text;
+          authService.email = emailController.text;
           authService.token_auth =
               response.headers.value("Authorization") ?? "";
           MyApp.of(context).userData = UserData.fromJson(res);
