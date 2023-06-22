@@ -4,7 +4,6 @@ import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
-import 'package:jogo_mobile_app/widgets/button_sign_up.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 

@@ -4,7 +4,6 @@ import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
 import 'package:jogo_mobile_app/pages/home_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
-import 'package:jogo_mobile_app/pages/qr_page.dart';
 import 'package:jogo_mobile_app/pages/ranking_page.dart';
 import 'package:jogo_mobile_app/routes.guard.dart';
 
@@ -38,12 +37,6 @@ import 'package:jogo_mobile_app/routes.guard.dart';
       page: ProfilePage,
       name: 'ProfileRoute',
       path: '/profile',
-      guards: [RouteGuard],
-    ),
-    AutoRoute(
-      page: QrPage,
-      name: 'QrRoute',
-      path: '/qr',
       guards: [RouteGuard],
     ),
     AutoRoute(

@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
-import 'package:jogo_mobile_app/widgets/button_change_password.dart';
-import 'package:jogo_mobile_app/widgets/button_set_password.dart';
 import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/success_modal.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';

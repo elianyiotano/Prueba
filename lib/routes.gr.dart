@@ -11,103 +11,91 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
+import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:flutter/material.dart' as _i8;
 
 import 'pages/home_page.dart' as _i3;
 import 'pages/Login/signin_page.dart' as _i1;
 import 'pages/Login/signup_Page.dart' as _i2;
 import 'pages/notification_page.dart' as _i4;
 import 'pages/profile_page.dart' as _i5;
-import 'pages/qr_page.dart' as _i6;
-import 'pages/ranking_page.dart' as _i7;
-import 'routes.guard.dart' as _i10;
+import 'pages/ranking_page.dart' as _i6;
+import 'routes.guard.dart' as _i9;
 
-class AppRouter extends _i8.RootStackRouter {
+class AppRouter extends _i7.RootStackRouter {
   AppRouter({
-    _i9.GlobalKey<_i9.NavigatorState>? navigatorKey,
+    _i8.GlobalKey<_i8.NavigatorState>? navigatorKey,
     required this.routeGuard,
   }) : super(navigatorKey);
 
-  final _i10.RouteGuard routeGuard;
+  final _i9.RouteGuard routeGuard;
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i7.PageFactory> pagesMap = {
     SignInRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.SignIn(),
       );
     },
     SignUpRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i2.SignUp(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i3.HomePage(),
       );
     },
     NotificationRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i4.NotificationPage(),
       );
     },
     ProfileRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.ProfilePage(),
       );
     },
-    QrRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i6.QrPage(),
-      );
-    },
     RankingRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i7.RankingPage(),
+        child: _i6.RankingPage(),
       );
     },
   };
 
   @override
-  List<_i8.RouteConfig> get routes => [
-        _i8.RouteConfig(
+  List<_i7.RouteConfig> get routes => [
+        _i7.RouteConfig(
           SignInRoute.name,
           path: '/signin',
         ),
-        _i8.RouteConfig(
+        _i7.RouteConfig(
           SignUpRoute.name,
           path: '/signup',
         ),
-        _i8.RouteConfig(
+        _i7.RouteConfig(
           HomeRoute.name,
           path: '/',
           guards: [routeGuard],
         ),
-        _i8.RouteConfig(
+        _i7.RouteConfig(
           NotificationRoute.name,
           path: '/notification',
           guards: [routeGuard],
         ),
-        _i8.RouteConfig(
+        _i7.RouteConfig(
           ProfileRoute.name,
           path: '/profile',
           guards: [routeGuard],
         ),
-        _i8.RouteConfig(
-          QrRoute.name,
-          path: '/qr',
-          guards: [routeGuard],
-        ),
-        _i8.RouteConfig(
+        _i7.RouteConfig(
           RankingRoute.name,
           path: '/ranking',
           guards: [routeGuard],
@@ -117,7 +105,7 @@ class AppRouter extends _i8.RootStackRouter {
 
 /// generated route for
 /// [_i1.SignIn]
-class SignInRoute extends _i8.PageRouteInfo<void> {
+class SignInRoute extends _i7.PageRouteInfo<void> {
   const SignInRoute()
       : super(
           SignInRoute.name,
@@ -129,7 +117,7 @@ class SignInRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.SignUp]
-class SignUpRoute extends _i8.PageRouteInfo<void> {
+class SignUpRoute extends _i7.PageRouteInfo<void> {
   const SignUpRoute()
       : super(
           SignUpRoute.name,
@@ -141,7 +129,7 @@ class SignUpRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomePage]
-class HomeRoute extends _i8.PageRouteInfo<void> {
+class HomeRoute extends _i7.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -153,7 +141,7 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.NotificationPage]
-class NotificationRoute extends _i8.PageRouteInfo<void> {
+class NotificationRoute extends _i7.PageRouteInfo<void> {
   const NotificationRoute()
       : super(
           NotificationRoute.name,
@@ -165,7 +153,7 @@ class NotificationRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.ProfilePage]
-class ProfileRoute extends _i8.PageRouteInfo<void> {
+class ProfileRoute extends _i7.PageRouteInfo<void> {
   const ProfileRoute()
       : super(
           ProfileRoute.name,
@@ -176,20 +164,8 @@ class ProfileRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.QrPage]
-class QrRoute extends _i8.PageRouteInfo<void> {
-  const QrRoute()
-      : super(
-          QrRoute.name,
-          path: '/qr',
-        );
-
-  static const String name = 'QrRoute';
-}
-
-/// generated route for
-/// [_i7.RankingPage]
-class RankingRoute extends _i8.PageRouteInfo<void> {
+/// [_i6.RankingPage]
+class RankingRoute extends _i7.PageRouteInfo<void> {
   const RankingRoute()
       : super(
           RankingRoute.name,
