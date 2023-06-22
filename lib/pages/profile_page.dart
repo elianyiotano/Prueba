@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:jogo_mobile_app/pages/ranking_page.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -39,7 +42,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Text(
+          const Text(
             'Viviana Morales',
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -49,7 +52,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Text(
+          const Text(
             'Category: Silver',
             style: TextStyle(
               fontSize: 15,
@@ -110,21 +113,17 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-            decoration: BoxDecoration(
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Color(0xFFE5E5E5)),
-              color: Colors.white,
             ),
-            child: Padding(
-              padding: EdgeInsets.all(0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 2),
-                  Text(
-                    '   My Points',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  title: const Text(
+                    'My Points',
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Poppins',
@@ -132,86 +131,91 @@ class ProfilePage extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 1),
-                  Container(
-                    height: 200,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                              minimum: 0,
-                              maximum: 100,
-                              showLabels: false,
-                              showTicks: false,
-                              startAngle: 150,
-                              endAngle: 30,
-                              radiusFactor: 0.8,
-                              axisLineStyle: AxisLineStyle(
-                                thickness: 20,
-                                color: Colors.grey[300],
-                                thicknessUnit: GaugeSizeUnit.logicalPixel,
+                  trailing: IconButton(
+                    icon: Icon(Icons.more_horiz),
+                    onPressed: () {
+                      final router = context.router;
+                      router.pushNamed('/ranking');
+                    },
+                  ),
+                ),
+                const SizedBox(height: 1),
+                Container(
+                  height: 200,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SfRadialGauge(
+                        axes: <RadialAxis>[
+                          RadialAxis(
+                            minimum: 0,
+                            maximum: 100,
+                            showLabels: false,
+                            showTicks: false,
+                            startAngle: 150,
+                            endAngle: 30,
+                            radiusFactor: 0.8,
+                            axisLineStyle: AxisLineStyle(
+                              thickness: 20,
+                              color: Colors.grey[300],
+                              thicknessUnit: GaugeSizeUnit.logicalPixel,
+                            ),
+                            pointers: const <GaugePointer>[
+                              RangePointer(
+                                value: 75,
+                                width: 20,
+                                color: Colors.green,
+                                pointerOffset: 10,
+                                enableAnimation: true,
+                                animationDuration: 1000,
                               ),
-                              pointers: <GaugePointer>[
-                                RangePointer(
-                                  value: 75,
-                                  width: 20,
-                                  color: Colors.green,
-                                  pointerOffset: 10,
-                                  enableAnimation: true,
-                                  animationDuration: 1000,
+                            ],
+                          ),
+                        ],
+                      ),
+                      Positioned.fill(
+                        child: FractionallySizedBox(
+                          alignment: Alignment.center,
+                          widthFactor: 0.4,
+                          heightFactor: 0.4,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Progreso',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  '195/500',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        Positioned.fill(
-                          child: FractionallySizedBox(
-                            alignment: Alignment.center,
-                            widthFactor: 0.4,
-                            heightFactor: 0.4,
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Progreso',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    '195/500',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-              height:
-                  10), 
-          Align(
+          const SizedBox(height: 10),
+          const Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -226,9 +230,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-              height:
-                  10), 
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
               itemCount: 3,
@@ -249,8 +251,8 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Expanded(
+                      const SizedBox(width: 10),
+                      const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -271,7 +273,7 @@ class ProfilePage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(
+                      const Text(
                         '+10',
                         style: TextStyle(
                           fontSize: 12,
