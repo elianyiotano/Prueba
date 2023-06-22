@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/user.dart';
+import 'package:jogo_mobile_app/pages/Login/forgot_password.dart';
 import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
@@ -64,6 +65,24 @@ class _SignInState extends State<SignIn> {
                   textInputType: TextInputType.text,
                   obscure: true,
                 ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPassword()),
+                    );
+                  },
+                  child: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Forgot password?",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
@@ -103,11 +122,13 @@ class _SignInState extends State<SignIn> {
           children: [
             Text('Don\'t have an account?'),
             TextButton(
-              onPressed: (){
-                Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SignUp()));
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => SignUp()));
               },
-              child: Text("Sign Up", style: TextStyle(
+              child: Text(
+                "Sign Up",
+                style: TextStyle(
                   color: Color.fromRGBO(49, 220, 118, 1.0),
                 ),
               ),
