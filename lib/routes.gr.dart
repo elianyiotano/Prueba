@@ -72,7 +72,7 @@ class AppRouter extends _i8.RootStackRouter {
     RankingRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.RankingPage(),
+        child: _i7.RankingPage(),
       );
     },
   };
