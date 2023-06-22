@@ -135,17 +135,16 @@ class SignUp extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             // ignore: use_build_context_synchronously
             content: Text(
-                '${res['errors']['email']}'.replaceAll(RegExp(r'[\[\]]'), ''),
-                textScaleFactor: 2),
+                '${res['errors']['email']}'.replaceAll(RegExp(r'[\[\]]'), '')),
             // ignore: use_build_context_synchronously
-            backgroundColor: Theme.of(context).colorScheme.error,
+            backgroundColor: Colors.red,
           ));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             // ignore: use_build_context_synchronously
-            content: Text('${res['errors']}', textScaleFactor: 2),
+            content: Text('${res['errors']}'),
             // ignore: use_build_context_synchronously
-            backgroundColor: Theme.of(context).colorScheme.error,
+            backgroundColor: Colors.red,
           ));
         }
         // ignore: use_build_context_synchronously
