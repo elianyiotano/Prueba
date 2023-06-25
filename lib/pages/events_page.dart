@@ -1,13 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/models/event.dart';
+import 'package:jogo_mobile_app/services/events.service.dart';
 
-class EventsPage extends StatelessWidget {
-  // Supongamos que recibes una lista de objetos Event desde el backend
-  List<Event> events = [
-    Event('https://images.squarespace-cdn.com/content/v1/58597a19e58c62ba7fa48bf9/1548266254177-E9L28UDS7DYTNXY6E3TG/49711511_1899872330125651_6983768156468674560_n.jpg', 'Fecha 1', 'Próximos eventos'),
-    Event('https://blog.mailup.es/wp-content/uploads/2018/01/evento-cover.jpg', 'Fecha 2', 'Lugar 2'),
-    Event('https://blog.mailup.es/wp-content/uploads/2018/01/evento-cover.jpg', 'Fecha 3', 'Lugar 3'),
-    // Agrega más objetos Event según sea necesario
-  ];
+class EventsPage extends StatefulWidget {
+  @override
+  _EventsPageState createState() => _EventsPageState();
+}
+
+class _EventsPageState extends State<EventsPage> {
+  List<Event> events = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getEventList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,7 @@ class EventsPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Container(
-          height: 600, 
+          height: 600,
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -53,14 +61,15 @@ class EventsPage extends StatelessWidget {
   }
 
   Widget _buildEventTile(Event event) {
+    print(event.date);
     return Container(
-      height: 200, // Ajusta la altura según tus necesidades
-      width: double.infinity, // Ocupa todo el ancho disponible
+      height: 200,
+      width: double.infinity,
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(11.0),
         image: DecorationImage(
-          image: NetworkImage(event.imageUrl),
+          image: NetworkImage(event.image ?? ''),
           fit: BoxFit.cover,
         ),
       ),
@@ -72,11 +81,11 @@ class EventsPage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 2, 49, 87), // Personaliza el color del badge según tus necesidades
+                color: const Color.fromARGB(255, 2, 49, 87),
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: Text(
-                event.date,
+                event.date ?? '',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -90,15 +99,15 @@ class EventsPage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: Colors.transparent, // Personaliza el color del contenedor del lugar según tus necesidades
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(11.0),
               ),
               child: Text(
-                event.location,
+                event.place ?? '',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -107,12 +116,28 @@ class EventsPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class Event {
-  final String imageUrl;
-  final String date;
-  final String location;
-
-  Event(this.imageUrl, this.date, this.location);
+  Future<void> getEventList() async {
+    if (true) {
+      Response response = await EventService().getList(context);
+      dynamic res = response.data;
+      print(res);
+      if (res['ErrorCode'] == null && res["success"] != "") {
+        events.clear();
+        res['events'].forEach((value) {
+          events.add(Event.fromJson(value));
+        });
+        setState(() {}); // Agregamos setState para actualizar la interfaz después de obtener la lista de eventos
+      } else {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${res['message']}'),
+            duration: Duration(seconds: 4),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 }

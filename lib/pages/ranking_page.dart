@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/routes.gr.dart';
 
 class RankingPage extends StatelessWidget {
   final List<Usuario> usuarios = [
@@ -65,20 +67,34 @@ class RankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back), 
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Color.fromARGB(255, 3, 19, 123),
+          ),
+        title: const Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Ranking',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8), // Ajusta el margen inferior aquí
-            child: Text(
-              'Ranking',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.start,
-            ),
-          ),
           Expanded(
             child: ListView.separated(
               itemCount: usuarios.length,

@@ -3,7 +3,7 @@ import 'package:jogo_mobile_app/constants/constants.dart';
 import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/services/auth.service.dart';
 
-class ParkingSessionService {
+class EventService {
   final Dio _dio = Dio();
 
   Future<Response> getList(context) async {
@@ -18,8 +18,12 @@ class ParkingSessionService {
               ));
       return response;
     } on DioError catch (e) {
+    if (e.response != null) {
       return e.response!;
+    } else {
+      throw Exception('Error de respuesta nula');
     }
+  }
   }
 
   Future<Response> search(context, String id) async {
