@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/event.dart';
+import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/events.service.dart';
 
 class EventsPage extends StatefulWidget {
@@ -62,59 +64,68 @@ class _EventsPageState extends State<EventsPage> {
 
   Widget _buildEventTile(Event event) {
     print(event.date);
-    return Container(
-      height: 200,
-      width: double.infinity,
-      margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(11.0),
-        image: DecorationImage(
-          image: NetworkImage(event.image ?? ''),
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        _navigateToEventDetail(event);
+      },
+      child: Container(
+        height: 200,
+        width: double.infinity,
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(11.0),
+          image: DecorationImage(
+            image: NetworkImage(event.image ?? ''),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 8.0,
+              left: 8.0,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 2, 49, 87),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                child: Text(
+                  event.date ?? '',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 8.0,
+              right: 8.0,
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(11.0),
+                ),
+                child: Text(
+                  event.place ?? '',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 8.0,
-            left: 8.0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 2, 49, 87),
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Text(
-                event.date ?? '',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 8.0,
-            right: 8.0,
-            child: Container(
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(11.0),
-              ),
-              child: Text(
-                event.place ?? '',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
+  }
+
+  void _navigateToEventDetail(Event event) {
+     AutoRouter.of(context).push(DetailRoute(event: event));
   }
 
   Future<void> getEventList() async {
@@ -139,5 +150,28 @@ class _EventsPageState extends State<EventsPage> {
         );
       }
     }
+  }
+}
+
+class EventDetailPage extends StatefulWidget {
+  final Event event;
+
+  EventDetailPage({required this.event});
+
+  @override
+  _EventDetailPageState createState() => _EventDetailPageState();
+}
+
+class _EventDetailPageState extends State<EventDetailPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detalles del evento'),
+      ),
+      body: Center(
+        child: Text('Evento: ${widget.event.name}'),
+      ),
+    );
   }
 }

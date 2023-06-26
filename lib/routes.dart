@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
+import 'package:jogo_mobile_app/pages/detail_page.dart';
 import 'package:jogo_mobile_app/pages/home_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
@@ -25,6 +26,12 @@ import 'package:jogo_mobile_app/routes.guard.dart';
       page: HomePage,
       name: 'HomeRoute',
       path: '/',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: DetailPage,
+      name: 'DetailRoute',
+      path: '/detail',
       guards: [RouteGuard],
     ),
     AutoRoute(
