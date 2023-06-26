@@ -7,7 +7,7 @@ class ApiConstants {
   static String getUser = '/api/user/';
   static String getListMessage = '/api/user/message';
 
-  static String getListEvents = '/c0ee03e1-8813-43d3-8f33-cc43be2a805a';
+  static String getListEvents = '/bca646ab-dd83-401a-acf1-a90432812f29';
   static String getEvent = '/api/event/:id';
 
   static String getRanking = '/api/ranking';
