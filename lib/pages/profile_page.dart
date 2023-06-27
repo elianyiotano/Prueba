@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 20), 
+                    SizedBox(width: 20),
                     Column(
                       children: [
                         Text(
@@ -182,7 +182,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   radiusFactor: 0.8,
                                   axisLineStyle: AxisLineStyle(
                                     thickness: 20,
-                                    color: const Color.fromARGB(255, 147, 229, 150),
+                                    color: const Color.fromARGB(
+                                        255, 147, 229, 150),
                                     thicknessUnit: GaugeSizeUnit.logicalPixel,
                                   ),
                                   pointers: <GaugePointer>[
@@ -257,8 +258,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 10),
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView.separated(
                     itemCount: activities.length,
+                    separatorBuilder: (context, index) => Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                      indent: 16,
+                      endIndent: 16,
+                    ),
                     itemBuilder: (context, index) {
                       Activity activity = activities[index];
                       return Padding(
