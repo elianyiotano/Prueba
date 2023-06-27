@@ -1,10 +1,28 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/models/activity.dart';
+import 'package:jogo_mobile_app/models/user.dart';
+import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:jogo_mobile_app/pages/ranking_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late User user;
+  List<Activity> activities = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +52,7 @@ class ProfilePage extends StatelessWidget {
                     offset: Offset(0, 3),
                   ),
                 ],
-                image: const DecorationImage(
+                image: DecorationImage(
                   image: AssetImage('assets/images/my_profile.jpg'),
                   fit: BoxFit.cover,
                 ),
@@ -220,7 +238,7 @@ class ProfilePage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Recently activity',
+                'Recent Activity',
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'Poppins',
@@ -233,8 +251,9 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
-              itemCount: 3,
+              itemCount: activities.length,
               itemBuilder: (context, index) {
+                Activity activity = activities[index];
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -245,40 +264,45 @@ class ProfilePage extends StatelessWidget {
                         height: 40,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/my_profile.jpg'),
+                          image: DecorationImage(
+                            image: NetworkImage(activity.image!),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       const SizedBox(width: 10),
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Activity Title',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(children: [
+                                Text(
+                                  activity.name!,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "+" + activity.points!.toString() + " pts",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ]),
+                              SizedBox(height: 3),
+                              Text(
+                                activity.date!,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[600],
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 3),
-                            Text(
-                              'Activity Description',
-                              style: TextStyle(
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Text(
-                        '+10',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -290,5 +314,42 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> getProfile(BuildContext context) async {
+    try {
+      Response response = await UserService().getUserProfileData(context);
+      dynamic res = response.data;
+      print(res);
+      if (res['ErrorCode'] == null && res["success"] != "") {
+        user = User.fromJson(res['profile']);
+        activities.clear();
+        res['activity'].forEach((value) {
+          activities.add(Activity.fromJson(value));
+        });
+        if (mounted) {
+          setState(() {});
+        }
+      } else {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${res['message']}'),
+            duration: const Duration(seconds: 4),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (error) {
+      print(error.toString());
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('An error occurred.'),
+          duration: const Duration(seconds: 4),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

@@ -125,7 +125,7 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   void _navigateToEventDetail(Event event) {
-     AutoRouter.of(context).push(DetailRoute(event: event));
+    AutoRouter.of(context).push(DetailRoute(event: event));
   }
 
   Future<void> getEventList() async {
@@ -138,7 +138,9 @@ class _EventsPageState extends State<EventsPage> {
         res['events'].forEach((value) {
           events.add(Event.fromJson(value));
         });
-        setState(() {}); // Agregamos setState para actualizar la interfaz después de obtener la lista de eventos
+        if (mounted) {
+          setState(() {});
+        }
       } else {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -150,28 +152,5 @@ class _EventsPageState extends State<EventsPage> {
         );
       }
     }
-  }
-}
-
-class EventDetailPage extends StatefulWidget {
-  final Event event;
-
-  EventDetailPage({required this.event});
-
-  @override
-  _EventDetailPageState createState() => _EventDetailPageState();
-}
-
-class _EventDetailPageState extends State<EventDetailPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detalles del evento'),
-      ),
-      body: Center(
-        child: Text('Evento: ${widget.event.name}'),
-      ),
-    );
   }
 }
