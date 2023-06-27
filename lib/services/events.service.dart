@@ -25,20 +25,4 @@ class EventService {
     }
   }
   }
-
-  Future<Response> ranking(context) async {
-    try {
-      AuthService authService = MyApp.of(context).authService;
-      Response response =
-          await _dio.get(ApiConstants.baseUrl + ApiConstants.getRanking,
-              options: Options(
-                headers: {
-                  "Authorization": authService.token_auth,
-                },
-              ));
-      return response;
-    } on DioError catch (e) {
-      return e.response!;
-    }
-  }
 }
