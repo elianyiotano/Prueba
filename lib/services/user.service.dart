@@ -36,15 +36,14 @@ class UserService {
     }
   }
 
-  Future<Response> getUserProfileData(context, String id) async {
+  Future<Response> getUserProfileData(context) async {
     try {
       AuthService authService = MyApp.of(context).authService;
       Response response =
           await _dio.post(ApiConstants.baseUrl + ApiConstants.getUser,
               options: Options(headers: {
                 "Authorization": authService.token_auth,
-              }),
-              data: {"id": id});
+              }));
 
       return response;
     } on DioError catch (e) {
