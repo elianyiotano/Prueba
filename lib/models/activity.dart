@@ -3,7 +3,7 @@ class Activity {
   String? name;
   String? image;
   String? date;
-  String? points;
+  int? points;
 
   Activity(
       {this.id,

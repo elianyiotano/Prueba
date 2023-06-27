@@ -18,16 +18,20 @@ class UserService {
     }
   }
 
-  Future<Response> create(String username, String email, String password,
-      String password_confirmation) async {
+  Future<Response> create(String email, String password,
+      String name, String lastName1, String lastName2, String phone) async {
     try {
       Response response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.singUpEndpoint,
         data: {
-          'username': username,
+          'first_name': name,
+          'last_name_1': lastName1,
+          'last_name_2': lastName2,
           'email': email,
           'password': password,
-          'password_confirmation': password_confirmation
+          'password_confirmation': password,
+          'phone_number': phone,
+          "referral_code": ""
         },
       );
       return response;
@@ -36,15 +40,14 @@ class UserService {
     }
   }
 
-  Future<Response> getUserProfileData(context, String id) async {
+  Future<Response> getUserProfileData(context) async {
     try {
       AuthService authService = MyApp.of(context).authService;
       Response response =
           await _dio.post(ApiConstants.baseUrl + ApiConstants.getUser,
               options: Options(headers: {
                 "Authorization": authService.token_auth,
-              }),
-              data: {"id": id});
+              }));
 
       return response;
     } on DioError catch (e) {
@@ -67,6 +70,22 @@ class UserService {
             },
           ),
           data: {"redirect_url": "", "email": email});
+      return response;
+    } on DioError catch (e) {
+      return e.response!;
+    }
+  }
+
+  Future<Response> ranking(context) async {
+    try {
+      AuthService authService = MyApp.of(context).authService;
+      Response response =
+          await _dio.get(ApiConstants.baseUrl + ApiConstants.getRanking,
+              options: Options(
+                headers: {
+                  "Authorization": authService.token_auth,
+                },
+              ));
       return response;
     } on DioError catch (e) {
       return e.response!;
