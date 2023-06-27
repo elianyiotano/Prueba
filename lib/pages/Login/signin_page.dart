@@ -11,7 +11,6 @@ import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 
-
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
@@ -160,8 +159,7 @@ class _SignInState extends State<SignIn> {
           var authService = MyApp.of(context).authService;
           authService.authenticated = true;
           authService.email = emailController.text;
-          authService.token_auth =
-              response.headers.value("Authorization") ?? "";
+          authService.token_auth = res["token"] ?? "";
           MyApp.of(context).userData = UserData.fromJson(res);
           AutoRouter.of(context).replace(const HomeRoute());
         }

@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/main.dart';
-import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
@@ -11,6 +9,8 @@ class SignUp extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastName1Controller = TextEditingController();
+  final TextEditingController lastName2Controller = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   UserService userService = UserService();
 
@@ -40,7 +40,26 @@ class SignUp extends StatelessWidget {
                 //NameInput
                 TextFormGlobal(
                   controller: nameController,
-                  text: 'Full name',
+                  text: 'Nombre',
+                  obscure: false,
+                  textInputType: TextInputType.text,
+                ),
+                const SizedBox(height: 10),
+
+                Row(children: [],),
+                //NameInput
+                TextFormGlobal(
+                  controller: lastName1Controller,
+                  text: 'Primer Apellido',
+                  obscure: false,
+                  textInputType: TextInputType.text,
+                ),
+                const SizedBox(height: 10),
+
+                //NameInput
+                TextFormGlobal(
+                  controller: lastName2Controller,
+                  text: 'Segundo Apellido',
                   obscure: false,
                   textInputType: TextInputType.text,
                 ),
@@ -115,33 +134,28 @@ class SignUp extends StatelessWidget {
             duration: Duration(seconds: 5),
             backgroundColor: Colors.green),
       );
-
+  
       Response response = await userService.create(emailController.text,
-          passwordController.text, nameController.text, phoneController.text);
+          passwordController.text, nameController.text, lastName1Controller.text, lastName2Controller.text, phoneController.text);
       dynamic res = response.data;
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      if (res['ErrorCode'] == null && res["success"] != "") {
-        var authService = MyApp.of(context).authService;
-        authService.authenticated = true;
-        authService.token_auth = response.headers.value("Authorization") ?? "";
-        MyApp.of(context).userData = UserData.fromJson(res);
+      if (res['error'] == null && res["token"] != "") {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SignIn()));
       } else {
-        if (res["errors"].containsKey("email")) {
+        if (res["error"] != "") {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             // ignore: use_build_context_synchronously
-            content: Text(
-                '${res['errors']['email']}'.replaceAll(RegExp(r'[\[\]]'), '')),
+            content: Text(res["error"]),
             // ignore: use_build_context_synchronously
             backgroundColor: Colors.red,
           ));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             // ignore: use_build_context_synchronously
-            content: Text('${res['errors']}'),
+            content: Text('Ha ocurrido un error'),
             // ignore: use_build_context_synchronously
             backgroundColor: Colors.red,
           ));
