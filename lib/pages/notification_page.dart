@@ -1,8 +1,25 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/models/message.dart';
+import 'package:jogo_mobile_app/services/message.service.dart';
+import 'package:intl/intl.dart';
 
-class NotificationPage extends StatelessWidget {
+class NotificationPage extends StatefulWidget {
+  @override
+  _NotificationPageState createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  List<Message> messagesToday = [];
+  List<Message> messagesBefore = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getMessage(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,52 +36,77 @@ class NotificationPage extends StatelessWidget {
                   ))),
           SectionHeader(title: 'Hoy'),
           SizedBox(height: 5.0),
-          NotificationCard(
-            icon: Icon(Icons.notifications_none_outlined),
-            title: 'Notificación 1',
-            description: 'Descripción de la notificación 1',
-            dateTime: DateTime.now(),
-          ),
-          SizedBox(height: 5.0),
-          NotificationCard(
-            icon: Icon(Icons.notifications_none_outlined),
-            title: 'Notificación 2',
-            description: 'Descripción de la notificación 2',
-            dateTime: DateTime.now(),
-          ),
+          ..._buildNotificationTodayCards(),
           SizedBox(height: 5.0),
           SectionHeader(title: 'Anteriores'),
           SizedBox(height: 5.0),
-          NotificationCard(
-            icon: Icon(Icons.notifications_none_outlined),
-            title: 'Notificación 3',
-            description: 'Descripción de la notificación 3',
-            dateTime: DateTime.now().subtract(Duration(days: 1)),
-          ),
-          SizedBox(height: 5.0),
-          NotificationCard(
-            icon: Icon(Icons.notifications_none_outlined),
-            title: 'Notificación 4',
-            description: 'Descripción de la notificación 4',
-            dateTime: DateTime.now().subtract(Duration(days: 2)),
-          ),
-          SizedBox(height: 5.0),
-          NotificationCard(
-            icon: Icon(Icons.notifications_none_outlined),
-            title: 'Notificación 5',
-            description: 'Descripción de la notificación 4',
-            dateTime: DateTime.now().subtract(Duration(days: 2)),
-          ),
-          SizedBox(height: 5.0),
-          NotificationCard(
-            icon: Icon(Icons.notifications_none_outlined),
-            title: 'Notificación 6',
-            description: 'Descripción de la notificación 4',
-            dateTime: DateTime.now().subtract(Duration(days: 2)),
-          ),
+          ..._buildNotificationBeforeCards(),
         ],
       ),
     );
+  }
+
+  List<Widget> _buildNotificationTodayCards() {
+    return messagesToday.map((message) {
+      return NotificationCard(
+        icon: Icon(Icons.notifications_none_outlined),
+        title: message.title ?? '',
+        description: message.text ?? '',
+        dateTime: DateTime.parse(message.date.toString()),
+      );
+    }).toList();
+  }
+
+  List<Widget> _buildNotificationBeforeCards() {
+    return messagesBefore.map((message) {
+      return NotificationCard(
+        icon: Icon(Icons.notifications_none_outlined),
+        title: message.title ?? '',
+        description: message.text ?? '',
+        dateTime:
+            DateTime.parse(message.date ??= DateTime.now().toString()),
+      );
+    }).toList();
+  }
+
+  Future<void> getMessage(BuildContext context) async {
+   
+      Response response = await MesageService().getList(context);
+      dynamic res = response.data;
+      print(res);
+      if (res['error'] == null && res["token"] != "") {
+        DateTime currentDate = DateTime.now();
+        String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+        setState(() {
+          messagesToday.clear();
+          messagesBefore.clear();
+          res['messages'].forEach((value) {
+            String dateString = value['date'];
+            DateTime dateTime = DateTime.parse(dateString);
+            String date = DateFormat('yyyy-MM-dd').format(dateTime);
+
+            if (formattedDate == date) {
+              messagesToday.add(Message.fromJson(value));
+            } else {
+              messagesBefore.add(Message.fromJson(value));
+            }
+          });
+          isLoading = false;
+        });
+      } else {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${res['message']}'),
+            duration: Duration(seconds: 4),
+            backgroundColor: Colors.red,
+          ),
+        );
+        setState(() {
+          isLoading = false;
+        });
+      }
+     
   }
 }
 

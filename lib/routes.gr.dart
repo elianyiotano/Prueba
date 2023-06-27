@@ -14,12 +14,13 @@
 import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:flutter/material.dart' as _i9;
 
+import 'models/event.dart' as _i11;
+import 'pages/detail_page.dart' as _i4;
 import 'pages/home_page.dart' as _i3;
 import 'pages/Login/signin_page.dart' as _i1;
 import 'pages/Login/signup_Page.dart' as _i2;
-import 'pages/notification_page.dart' as _i4;
-import 'pages/profile_page.dart' as _i5;
-import 'pages/qr_page.dart' as _i6;
+import 'pages/notification_page.dart' as _i5;
+import 'pages/profile_page.dart' as _i6;
 import 'pages/ranking_page.dart' as _i7;
 import 'routes.guard.dart' as _i10;
 
@@ -51,28 +52,29 @@ class AppRouter extends _i8.RootStackRouter {
         child: _i3.HomePage(),
       );
     },
+    DetailRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailRouteArgs>();
+      return _i8.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i4.DetailPage(event: args.event),
+      );
+    },
     NotificationRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i4.NotificationPage(),
+        child: _i5.NotificationPage(),
       );
     },
     ProfileRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.ProfilePage(),
-      );
-    },
-    QrRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: _i6.QrPage(),
+        child: _i6.ProfilePage(),
       );
     },
     RankingRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.RankingPage(),
+        child: _i7.RankingPage(),
       );
     },
   };
@@ -93,6 +95,11 @@ class AppRouter extends _i8.RootStackRouter {
           guards: [routeGuard],
         ),
         _i8.RouteConfig(
+          DetailRoute.name,
+          path: '/detail',
+          guards: [routeGuard],
+        ),
+        _i8.RouteConfig(
           NotificationRoute.name,
           path: '/notification',
           guards: [routeGuard],
@@ -100,11 +107,6 @@ class AppRouter extends _i8.RootStackRouter {
         _i8.RouteConfig(
           ProfileRoute.name,
           path: '/profile',
-          guards: [routeGuard],
-        ),
-        _i8.RouteConfig(
-          QrRoute.name,
-          path: '/qr',
           guards: [routeGuard],
         ),
         _i8.RouteConfig(
@@ -152,7 +154,31 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.NotificationPage]
+/// [_i4.DetailPage]
+class DetailRoute extends _i8.PageRouteInfo<DetailRouteArgs> {
+  DetailRoute({required _i11.Event event})
+      : super(
+          DetailRoute.name,
+          path: '/detail',
+          args: DetailRouteArgs(event: event),
+        );
+
+  static const String name = 'DetailRoute';
+}
+
+class DetailRouteArgs {
+  const DetailRouteArgs({required this.event});
+
+  final _i11.Event event;
+
+  @override
+  String toString() {
+    return 'DetailRouteArgs{event: $event}';
+  }
+}
+
+/// generated route for
+/// [_i5.NotificationPage]
 class NotificationRoute extends _i8.PageRouteInfo<void> {
   const NotificationRoute()
       : super(
@@ -164,7 +190,7 @@ class NotificationRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.ProfilePage]
+/// [_i6.ProfilePage]
 class ProfileRoute extends _i8.PageRouteInfo<void> {
   const ProfileRoute()
       : super(
@@ -173,18 +199,6 @@ class ProfileRoute extends _i8.PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileRoute';
-}
-
-/// generated route for
-/// [_i6.QrPage]
-class QrRoute extends _i8.PageRouteInfo<void> {
-  const QrRoute()
-      : super(
-          QrRoute.name,
-          path: '/qr',
-        );
-
-  static const String name = 'QrRoute';
 }
 
 /// generated route for

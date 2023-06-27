@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/pages/detail_page.dart';
 import 'package:jogo_mobile_app/pages/events_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
-import 'package:jogo_mobile_app/pages/ranking_page.dart';
 import 'package:jogo_mobile_app/providers/ui_providers.dart';
 import 'package:jogo_mobile_app/widgets/scan_button.dart';
 import 'package:provider/provider.dart';

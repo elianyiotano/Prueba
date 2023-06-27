@@ -37,8 +37,8 @@ class User {
   String? createdAt;
   String? updatedAt;
   String? name;
-  String? events;
-  String? points;
+  int? events;
+  int? points;
   String? phoneNumber;
   bool? isConfirmed;
   bool? isActive;
