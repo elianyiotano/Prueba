@@ -67,7 +67,7 @@ class _RankingPageState extends State<RankingPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '${index}.',
+                              '${index+1}.',
                               style: TextStyle(color: Colors.black),
                             ),
                             SizedBox(width: 8),

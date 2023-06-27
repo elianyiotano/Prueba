@@ -133,7 +133,7 @@ class _EventsPageState extends State<EventsPage> {
       Response response = await EventService().getList(context);
       dynamic res = response.data;
       print(res);
-      if (res['ErrorCode'] == null && res["success"] != "") {
+      if (res['error'] == null && res["success"] != "") {
         events.clear();
         res['events'].forEach((value) {
           events.add(Event.fromJson(value));
