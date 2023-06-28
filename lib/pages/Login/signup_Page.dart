@@ -7,13 +7,21 @@ import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastName1Controller = TextEditingController();
   final TextEditingController lastName2Controller = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  bool? isChecked = false;
   UserService userService = UserService();
 
   @override
@@ -94,8 +102,101 @@ class SignUp extends StatelessWidget {
                   textInputType: TextInputType.text,
                   onVisibilityChanged: (bool obscure) {},
                 ),
-
                 const SizedBox(height: 10),
+
+                //Accept Terms and policy
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text('Terms & Privacy Policy'),
+                          content: Text(
+                            'Here you can display the terms and privacy policy.',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('Close'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 1),
+                        ],
+                        color: Color.fromARGB(255, 235, 238, 235),
+                      ),
+                      child: CheckboxListTile(
+                        title: Row(
+                          children: [
+                            Text(
+                              'I accepted',
+                              style: TextStyle(
+                                height: 1,
+                                color: const Color.fromARGB(255, 55, 54, 54),
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: Text('Terms & Privacy Policy'),
+                                    content: Text(
+                                      'Here you can display the terms and privacy policy.',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('Close'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Terms & Privacy Policy',
+                                style: TextStyle(
+                                  height: 1,
+                                  color: Colors.green,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        value: isChecked,
+                        activeColor: Colors.transparent,
+                        checkColor: Colors.green,
+                        tileColor: Colors.transparent,
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 25),
                 InkWell(
                   onTap: () {
@@ -120,6 +221,7 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 25),
                 const SocialLogin(),
               ],
             ),
