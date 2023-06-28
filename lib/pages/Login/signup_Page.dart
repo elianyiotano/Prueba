@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
@@ -46,7 +48,9 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
 
-                Row(children: [],),
+                Row(
+                  children: [],
+                ),
                 //NameInput
                 TextFormGlobal(
                   controller: lastName1Controller,
@@ -83,13 +87,12 @@ class SignUp extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 10),
-
                 //PasswordInput
-                TextFormGlobal(
+                PasswordTextForm(
                   controller: passwordController,
                   text: 'Password',
                   textInputType: TextInputType.text,
-                  obscure: true,
+                  onVisibilityChanged: (bool obscure) {},
                 ),
 
                 const SizedBox(height: 10),
@@ -134,9 +137,14 @@ class SignUp extends StatelessWidget {
             duration: Duration(seconds: 5),
             backgroundColor: Colors.green),
       );
-  
-      Response response = await userService.create(emailController.text,
-          passwordController.text, nameController.text, lastName1Controller.text, lastName2Controller.text, phoneController.text);
+
+      Response response = await userService.create(
+          emailController.text,
+          passwordController.text,
+          nameController.text,
+          lastName1Controller.text,
+          lastName2Controller.text,
+          phoneController.text);
       dynamic res = response.data;
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -163,5 +171,68 @@ class SignUp extends StatelessWidget {
         // ignore: use_build_context_synchronously
       }
     }
+  }
+}
+
+class PasswordTextForm extends StatefulWidget {
+  final TextEditingController controller;
+  final String text;
+  final TextInputType textInputType;
+  final ValueChanged<bool> onVisibilityChanged;
+
+  const PasswordTextForm({
+    required this.controller,
+    required this.text,
+    required this.textInputType,
+    required this.onVisibilityChanged,
+  });
+
+  @override
+  _PasswordTextFormState createState() => _PasswordTextFormState();
+}
+
+class _PasswordTextFormState extends State<PasswordTextForm> {
+  bool obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 55,
+      padding: const EdgeInsets.only(top: 3, left: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 1),
+        ],
+      ),
+      child: TextFormField(
+        controller: widget.controller,
+        keyboardType: widget.textInputType,
+        obscureText: obscure,
+        style: const TextStyle(fontSize: 16),
+        decoration: InputDecoration(
+          hintText: widget.text,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.only(top: 15),
+          hintStyle: const TextStyle(
+            fontSize: 16,
+            height: 1,
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                obscure = !obscure;
+              });
+              widget.onVisibilityChanged(obscure);
+            },
+            icon: Icon(
+              obscure ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
