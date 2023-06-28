@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -55,11 +57,11 @@ class _SignInState extends State<SignIn> {
                 const SizedBox(height: 10),
 
                 // PasswordInput
-                TextFormGlobal(
+                PasswordTextForm(
                   controller: passwordController,
                   text: 'Password',
                   textInputType: TextInputType.text,
-                  obscure: true,
+                  onVisibilityChanged: (bool obscure) {},
                 ),
                 TextButton(
                   onPressed: () {
@@ -93,7 +95,7 @@ class _SignInState extends State<SignIn> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Sign In',
                       style: TextStyle(
                         color: Colors.white,
@@ -116,13 +118,13 @@ class _SignInState extends State<SignIn> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Don\'t have an account?'),
+            const Text('Don\'t have an account?'),
             TextButton(
               onPressed: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => SignUp()));
               },
-              child: Text(
+              child: const Text(
                 "Sign Up",
                 style: TextStyle(
                   color: Color.fromRGBO(49, 220, 118, 1.0),
@@ -178,5 +180,68 @@ class _SignInState extends State<SignIn> {
         );
       }
     }
+  }
+}
+
+class PasswordTextForm extends StatefulWidget {
+  final TextEditingController controller;
+  final String text;
+  final TextInputType textInputType;
+  final ValueChanged<bool> onVisibilityChanged;
+
+  const PasswordTextForm({
+    required this.controller,
+    required this.text,
+    required this.textInputType,
+    required this.onVisibilityChanged,
+  });
+
+  @override
+  _PasswordTextFormState createState() => _PasswordTextFormState();
+}
+
+class _PasswordTextFormState extends State<PasswordTextForm> {
+  bool obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 55,
+      padding: const EdgeInsets.only(top: 3, left: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 1),
+        ],
+      ),
+      child: TextFormField(
+        controller: widget.controller,
+        keyboardType: widget.textInputType,
+        obscureText: obscure,
+        style: const TextStyle(fontSize: 16),
+        decoration: InputDecoration(
+          hintText: widget.text,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.only(top: 15),
+          hintStyle: const TextStyle(
+            fontSize: 16,
+            height: 1,
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                obscure = !obscure;
+              });
+              widget.onVisibilityChanged(obscure);
+            },
+            icon: Icon(
+              obscure ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
