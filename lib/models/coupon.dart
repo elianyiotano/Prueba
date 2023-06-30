@@ -24,7 +24,7 @@ class Coupon {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    image = json['image'];
+    image = json['image_url'];
     validFrom = json['valid_from'];
     validUntil = json['valid_until'];
     venue = json['venue'];
@@ -37,7 +37,7 @@ class Coupon {
     data['id'] = this.id;
     data['name'] = this.name;
     data['description'] = this.description;
-    data['image'] = this.image;
+    data['image_url'] = this.image;
     data['valid_from'] = this.validFrom;
     data['valid_until'] = this.validUntil;
     data['venue'] = this.venue;
