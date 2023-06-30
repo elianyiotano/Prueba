@@ -50,9 +50,9 @@ class _NotificationPageState extends State<NotificationPage> {
     return messagesToday.map((message) {
       return NotificationCard(
         icon: Icon(Icons.notifications_none_outlined),
-        title: message.title ?? '',
-        description: message.text ?? '',
-        dateTime: DateTime.parse(message.date.toString()),
+        title: message.category ?? '',
+        description: message.content ?? '',
+        dateTime: DateTime.parse(message.timestamp.toString()),
       );
     }).toList();
   }
@@ -61,10 +61,10 @@ class _NotificationPageState extends State<NotificationPage> {
     return messagesBefore.map((message) {
       return NotificationCard(
         icon: Icon(Icons.notifications_none_outlined),
-        title: message.title ?? '',
-        description: message.text ?? '',
+        title: message.category ?? '',
+        description: message.content ?? '',
         dateTime:
-            DateTime.parse(message.date ??= DateTime.now().toString()),
+            DateTime.parse(message.timestamp ??= DateTime.now().toString()),
       );
     }).toList();
   }
@@ -74,14 +74,14 @@ class _NotificationPageState extends State<NotificationPage> {
       Response response = await MesageService().getList(context);
       dynamic res = response.data;
       print(res);
-      if (res['error'] == null && res["token"] != "") {
+      if (res != "") {
         DateTime currentDate = DateTime.now();
         String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
         setState(() {
           messagesToday.clear();
           messagesBefore.clear();
-          res['messages'].forEach((value) {
-            String dateString = value['date'];
+          res.forEach((value) {
+            String dateString = value['timestamp'];
             DateTime dateTime = DateTime.parse(dateString);
             String date = DateFormat('yyyy-MM-dd').format(dateTime);
 
@@ -97,7 +97,7 @@ class _NotificationPageState extends State<NotificationPage> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${res['message']}'),
+            content: Text('${res['error']}'),
             duration: Duration(seconds: 4),
             backgroundColor: Colors.red,
           ),
