@@ -4,7 +4,7 @@ class Message {
   String? timestamp;
   String? category;
   String? status;
-  String? userId;
+  int? userId;
   String? createdAt;
   String? updatedAt;
 

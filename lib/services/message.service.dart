@@ -14,7 +14,7 @@ class MesageService {
           await _dio.get(ApiConstants.baseUrl + ApiConstants.getListMessage,
               options: Options(
                 headers: {
-                  "Authorization": authService.token_auth,
+                  "Authorization": "Bearer " + authService.token_auth,
                 },
               ));
       return response;
