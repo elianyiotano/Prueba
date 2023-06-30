@@ -43,7 +43,7 @@ class AppRouter extends _i8.RootStackRouter {
     SignUpRoute.name: (routeData) {
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.SignUp(),
+        child: const _i2.SignUp(),
       );
     },
     HomeRoute.name: (routeData) {
