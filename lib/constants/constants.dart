@@ -10,7 +10,7 @@ class ApiConstants {
   static String getUser = '/9fcffb90-1b13-4513-8adc-b047b73a6bf5';
   static String getListMessage = '/cbfe1ce4-ac13-43f0-baf8-bbbf9c3d0a76';
 
-  static String getListEvents = '/bca646ab-dd83-401a-acf1-a90432812f29';
+  static String getListCoupons = '/coupons';
   static String postQr = '/62a60dfe-b29b-4749-9f5c-4917154f6904';
 
   static String getRanking = '/4a1a7306-1200-421d-a220-485226feea3c';
