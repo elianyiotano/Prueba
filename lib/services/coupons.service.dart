@@ -13,16 +13,16 @@ class CouponService {
           await _dio.get(ApiConstants.baseUrl + ApiConstants.getListCoupons,
               options: Options(
                 headers: {
-                  "Authorization": authService.token_auth,
+                  "Authorization": "Bearer " + authService.token_auth,
                 },
               ));
       return response;
     } on DioError catch (e) {
-    if (e.response != null) {
-      return e.response!;
-    } else {
-      throw Exception('Error de respuesta nula');
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        throw Exception('Error de respuesta nula');
+      }
     }
-  }
   }
 }

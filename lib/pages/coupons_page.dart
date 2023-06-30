@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/coupon.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/coupons.service.dart';
+import 'package:intl/intl.dart';
 
 class CouponsPage extends StatefulWidget {
   @override
@@ -74,7 +75,8 @@ class _CouponsPageState extends State<CouponsPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(11.0),
           image: DecorationImage(
-            image: NetworkImage(coupon.image ?? ''),
+            image: NetworkImage(coupon.image ??
+                'https://blog.mailup.es/wp-content/uploads/2018/01/evento-cover.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -90,7 +92,7 @@ class _CouponsPageState extends State<CouponsPage> {
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 child: Text(
-                  "${coupon.validFrom!}-${coupon.validUntil}" ?? '',
+                  "${_formatDate(coupon.validFrom)}" ?? '',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -137,6 +139,7 @@ class _CouponsPageState extends State<CouponsPage> {
         res.forEach((value) {
           coupons.add(Coupon.fromJson(value));
         });
+        print(coupons[1].image);
         if (mounted) {
           setState(() {});
         }
@@ -151,5 +154,13 @@ class _CouponsPageState extends State<CouponsPage> {
         );
       }
     }
+  }
+
+  String _formatDate(String? date) {
+    if (date != null) {
+      final dateTime = DateTime.parse(date);
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    }
+    return '';
   }
 }
