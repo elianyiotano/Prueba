@@ -2,28 +2,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:jogo_mobile_app/pages/ranking_page.dart';
+class ProfilePage extends StatelessWidget {
+  final User user;
 
-class ProfilePage extends StatefulWidget {
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
+  ProfilePage({required this.user});
 
-class _ProfilePageState extends State<ProfilePage> {
-  User? user;
   List<Activity> activities = [];
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    getProfile(context);
-  }
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                       image: DecorationImage(
-                        image: NetworkImage(user?.photo ?? ''),
+                        image: NetworkImage(user?.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -67,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  user?.name ?? '',
+                  "${user?.firstName} ${user?.lastName1}" ?? '',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -91,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       children: [
                         Text(
-                          user?.events.toString() ?? '',
+                          '0',
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Poppins',
@@ -256,7 +248,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 35),
+                
+              if (activities.length == 0) ...[
+                Text("No hay actividades registradas")
+              ],
                 Expanded(
                   child: ListView.separated(
                     itemCount: activities.length,
@@ -332,42 +328,46 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> getProfile(BuildContext context) async {
-    try {
-      Response response = await UserService().getUserProfileData(context);
-      dynamic res = response.data;
-      print(res);
-      if (res['ErrorCode'] == null && res["success"] != "") {
-        user = User.fromJson(res['profile']);
-        activities.clear();
-        res['activity'].forEach((value) {
-          activities.add(Activity.fromJson(value));
-        });
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
-        }
-      } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${res['message']}'),
-            duration: const Duration(seconds: 4),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (error) {
-      print(error.toString());
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('An error occurred.'),
-          duration: const Duration(seconds: 4),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
+  // Future<void> getProfile(BuildContext context) async {
+  //   setState(() {
+  //           isLoading = false;
+  //         });
+    
+    // try {
+    //   Response response = await UserService().getUserProfileData(context);
+    //   dynamic res = response.data;
+    //   print(res);
+    //   if (res['ErrorCode'] == null && res["success"] != "") {
+    //     user = User.fromJson(res['profile']);
+    //     activities.clear();
+    //     res['activity'].forEach((value) {
+    //       activities.add(Activity.fromJson(value));
+    //     });
+    //     if (mounted) {
+    //       setState(() {
+    //         isLoading = false;
+    //       });
+    //     }
+    //   } else {
+    //     ScaffoldMessenger.of(context).clearSnackBars();
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text('${res['message']}'),
+    //         duration: const Duration(seconds: 4),
+    //         backgroundColor: Colors.red,
+    //       ),
+    //     );
+    //   }
+    // } catch (error) {
+    //   print(error.toString());
+    //   ScaffoldMessenger.of(context).clearSnackBars();
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: const Text('An error occurred.'),
+    //       duration: const Duration(seconds: 4),
+    //       backgroundColor: Colors.red,
+    //     ),
+    //   );
+    // }
+  // }
 }

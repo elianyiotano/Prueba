@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/pages/coupons_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
@@ -8,11 +9,15 @@ import 'package:provider/provider.dart';
 import '../widgets/custom_navigatorbar.dart';
 
 class HomePage extends StatelessWidget {
+  final User user;
+
+  HomePage({required this.user});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _HomePageBody(),
+        child: _HomePageBody(user: user),
       ),
       bottomNavigationBar: CustomNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -22,9 +27,13 @@ class HomePage extends StatelessWidget {
 }
 
 class _HomePageBody extends StatelessWidget {
+  final User user;
+
+  _HomePageBody({required this.user});
+
   @override
   Widget build(BuildContext context) {
-    //obtener el selected menu opt
+    // Obtener el selected menu opt
     final uiProviders = Provider.of<UiProviders>(context);
     final currentIndex = uiProviders.selectedMenuOpt;
 
@@ -36,7 +45,7 @@ class _HomePageBody extends StatelessWidget {
       case 2:
         return NotificationPage();
       case 3:
-        return ProfilePage();
+        return ProfilePage(user: user);
       default:
         return CouponsPage();
     }

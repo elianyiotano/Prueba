@@ -14,6 +14,7 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   final List<User> users = [];
   bool isLoading = true;
+  
 
   @override
   void initState() {
@@ -72,7 +73,7 @@ class _RankingPageState extends State<RankingPage> {
                             ),
                             SizedBox(width: 8),
                             CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePhotoUrl ?? ''),
+                              backgroundImage: NetworkImage(user.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                             ),
                           ],
                         ),

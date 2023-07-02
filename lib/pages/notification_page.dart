@@ -36,8 +36,13 @@ class _NotificationPageState extends State<NotificationPage> {
                   ))),
           SectionHeader(title: 'Hoy'),
           SizedBox(height: 5.0),
+          if (messagesToday.length == 0) ...[
+                Text("No hay mensajes",
+                    textAlign: TextAlign.center,
+                  )
+              ],
           ..._buildNotificationTodayCards(),
-          SizedBox(height: 5.0),
+          SizedBox(height: 20.0),
           SectionHeader(title: 'Anteriores'),
           SizedBox(height: 5.0),
           ..._buildNotificationBeforeCards(),

@@ -14,7 +14,8 @@
 import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:flutter/material.dart' as _i9;
 
-import 'models/coupon.dart' as _i11;
+import 'models/coupon.dart' as _i12;
+import 'models/user.dart' as _i11;
 import 'pages/detail_page.dart' as _i4;
 import 'pages/home_page.dart' as _i3;
 import 'pages/Login/signin_page.dart' as _i1;
@@ -47,9 +48,10 @@ class AppRouter extends _i8.RootStackRouter {
       );
     },
     HomeRoute.name: (routeData) {
+      final args = routeData.argsAs<HomeRouteArgs>();
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i3.HomePage(),
+        child: _i3.HomePage(user: args.user),
       );
     },
     DetailRoute.name: (routeData) {
@@ -66,9 +68,10 @@ class AppRouter extends _i8.RootStackRouter {
       );
     },
     ProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileRouteArgs>();
       return _i8.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i6.ProfilePage(),
+        child: _i6.ProfilePage(user: args.user),
       );
     },
     RankingRoute.name: (routeData) {
@@ -143,20 +146,32 @@ class SignUpRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomePage]
-class HomeRoute extends _i8.PageRouteInfo<void> {
-  const HomeRoute()
+class HomeRoute extends _i8.PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({required _i11.User user})
       : super(
           HomeRoute.name,
           path: '/',
+          args: HomeRouteArgs(user: user),
         );
 
   static const String name = 'HomeRoute';
 }
 
+class HomeRouteArgs {
+  const HomeRouteArgs({required this.user});
+
+  final _i11.User user;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{user: $user}';
+  }
+}
+
 /// generated route for
 /// [_i4.DetailPage]
 class DetailRoute extends _i8.PageRouteInfo<DetailRouteArgs> {
-  DetailRoute({required _i11.Coupon coupon})
+  DetailRoute({required _i12.Coupon coupon})
       : super(
           DetailRoute.name,
           path: '/detail',
@@ -169,7 +184,7 @@ class DetailRoute extends _i8.PageRouteInfo<DetailRouteArgs> {
 class DetailRouteArgs {
   const DetailRouteArgs({required this.coupon});
 
-  final _i11.Coupon coupon;
+  final _i12.Coupon coupon;
 
   @override
   String toString() {
@@ -191,14 +206,26 @@ class NotificationRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.ProfilePage]
-class ProfileRoute extends _i8.PageRouteInfo<void> {
-  const ProfileRoute()
+class ProfileRoute extends _i8.PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({required _i11.User user})
       : super(
           ProfileRoute.name,
           path: '/profile',
+          args: ProfileRouteArgs(user: user),
         );
 
   static const String name = 'ProfileRoute';
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({required this.user});
+
+  final _i11.User user;
+
+  @override
+  String toString() {
+    return 'ProfileRouteArgs{user: $user}';
+  }
 }
 
 /// generated route for
