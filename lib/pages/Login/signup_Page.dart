@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
 import 'package:jogo_mobile_app/widgets/success_modal.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
@@ -264,23 +265,27 @@ class _SignUpState extends State<SignUp> {
             context, MaterialPageRoute(builder: (context) => SignIn()));
       } else {
         if (res["error"] != "") {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            // ignore: use_build_context_synchronously
-            content: Text(res["error"]),
-            duration: Duration(seconds: 4),
-            // ignore: use_build_context_synchronously
-            backgroundColor: Colors.red,
-          ));
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return FailedModal(
+                title: 'Error en el envío',
+                description: res["error"],
+              );
+            },
+          );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            // ignore: use_build_context_synchronously
-            content: Text('Ha ocurrido un error'),
-            duration: Duration(seconds: 4),
-            // ignore: use_build_context_synchronously
-            backgroundColor: Colors.red,
-          ));
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return FailedModal(
+                title: 'Ha ocurrido un error',
+                description:
+                    "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+              );
+            },
+          );
         }
-        // ignore: use_build_context_synchronously
       }
     }
   }
