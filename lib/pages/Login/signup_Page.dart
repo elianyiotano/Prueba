@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
+import 'package:jogo_mobile_app/widgets/success_modal.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 
 class SignUp extends StatefulWidget {
@@ -236,7 +237,7 @@ class _SignUpState extends State<SignUp> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Creando cuenta...'),
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 4),
             backgroundColor: Colors.green),
       );
 
@@ -252,6 +253,13 @@ class _SignUpState extends State<SignUp> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       if (res['error'] == null && res["token"] != "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registro exitoso! Inicia sesión...'),
+            duration: Duration(seconds: 5),
+            backgroundColor: Colors.green,
+          ),
+        );
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SignIn()));
       } else {
@@ -259,6 +267,7 @@ class _SignUpState extends State<SignUp> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             // ignore: use_build_context_synchronously
             content: Text(res["error"]),
+            duration: Duration(seconds: 4),
             // ignore: use_build_context_synchronously
             backgroundColor: Colors.red,
           ));
@@ -266,6 +275,7 @@ class _SignUpState extends State<SignUp> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             // ignore: use_build_context_synchronously
             content: Text('Ha ocurrido un error'),
+            duration: Duration(seconds: 4),
             // ignore: use_build_context_synchronously
             backgroundColor: Colors.red,
           ));
