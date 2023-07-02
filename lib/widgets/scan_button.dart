@@ -34,12 +34,12 @@ class ScanButton extends StatelessWidget {
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      if (res['error'] == null && res["success"] != "") {
+      if (res['error'] == null && res["title"] != "") {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return const SuccessModal(
-              title: 'Verificación correcta',
+              title: 'Cupo Válido',
               description: 'Se ha verificado que el QR scaneado es válido. ',
             );
           },
