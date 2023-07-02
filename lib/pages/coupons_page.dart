@@ -46,19 +46,24 @@ class _CouponsPageState extends State<CouponsPage> {
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Container(
           height: 600,
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 8.0,
-              mainAxisSpacing: 8.0,
-            ),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: coupons.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildEventTile(coupons[index]);
-            },
-          ),
+          child: coupons.length == 0
+              ? Text(
+                  "No cupones disponibles",
+                  textAlign: TextAlign.center,
+                )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                  ),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: coupons.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildEventTile(coupons[index]);
+                  },
+                ),
         ),
       ),
     );
