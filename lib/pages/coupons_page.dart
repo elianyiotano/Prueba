@@ -134,7 +134,7 @@ class _CouponsPageState extends State<CouponsPage> {
       Response response = await CouponService().getList(context);
       dynamic res = response.data;
       print(res);
-      if (res != "") {
+      if (res is List) {
         coupons.clear();
         res.forEach((value) {
           coupons.add(Coupon.fromJson(value));
