@@ -12,7 +12,7 @@ class QrService {
       Response response =
           await _dio.post(ApiConstants.baseUrl + ApiConstants.postQr,
               options: Options(headers: {
-                "Authorization": authService.token_auth,
+                "Authorization": "Bearer " + authService.token_auth,
               }),
               data: {"barcode": barcode});
 

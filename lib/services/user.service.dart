@@ -40,21 +40,6 @@ class UserService {
     }
   }
 
-  Future<Response> getUserProfileData(context) async {
-    try {
-      AuthService authService = MyApp.of(context).authService;
-      Response response =
-          await _dio.post(ApiConstants.baseUrl + ApiConstants.getUser,
-              options: Options(headers: {
-                "Authorization": authService.token_auth,
-              }));
-
-      return response;
-    } on DioError catch (e) {
-      return e.response!;
-    }
-  }
-
   Future<dynamic> logout() async {
     throw Exception("no implementado");
   }
@@ -66,7 +51,7 @@ class UserService {
       Response response = await _dio.post(url,
           options: Options(
             headers: {
-              "Authorization": authService.token_auth,
+              "Authorization": "Bearer " + authService.token_auth,
             },
           ),
           data: {"redirect_url": "", "email": email});
@@ -83,7 +68,7 @@ class UserService {
           await _dio.get(ApiConstants.baseUrl + ApiConstants.getRanking,
               options: Options(
                 headers: {
-                  "Authorization": authService.token_auth,
+                  "Authorization": "Bearer " + authService.token_auth,
                 },
               ));
       return response;

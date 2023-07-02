@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/models/event.dart';
+import 'package:jogo_mobile_app/models/coupon.dart';
 
 class DetailPage extends StatelessWidget {
-  final Event event;
+  final Coupon coupon;
 
-  DetailPage({required this.event});
+  DetailPage({required this.coupon});
 
   @override
   Widget build(BuildContext context) {
@@ -14,31 +14,40 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back), 
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Color.fromARGB(255, 3, 19, 123),
-          ),
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Color.fromARGB(255, 3, 19, 123),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
         child: Column(
           children: [
-            CarouselSlider(
-              options: CarouselOptions(),
-              items: event.images?.map((item) {
-                return Container(
-                  child: Center(
-                    child: Image.network(
-                      item,
-                      fit: BoxFit.cover,
-                      width: 1000,
-                    ),
-                  ),
-                );
-              }).toList() ?? [],
+            // CarouselSlider(
+            //   options: CarouselOptions(),
+            //   items: event.images?.map((item) {
+            //     return Container(
+            //       child: Center(
+            //         child: Image.network(
+            //           item,
+            //           fit: BoxFit.cover,
+            //           width: 1000,
+            //         ),
+            //       ),
+            //     );
+            //   }).toList() ?? [],
+            // ),
+            Container(
+              child: Center(
+                child: Image.network(
+                  coupon.image ?? '',
+                  fit: BoxFit.cover,
+                  width: 1000,
+                ),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
@@ -46,7 +55,7 @@ class DetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    event.name ?? '',
+                    coupon.name ?? '',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -65,7 +74,7 @@ class DetailPage extends StatelessWidget {
                           horizontal: 8,
                         ),
                         child: Text(
-                          event.date ?? '',
+                          "${coupon.validFrom!}-${coupon.validUntil}" ?? '',
                           style: TextStyle(
                             color: const Color(0xFF0F511D),
                           ),
@@ -90,7 +99,7 @@ class DetailPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      event.place ?? '',
+                      coupon.venue ?? '',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -101,7 +110,7 @@ class DetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    event.description ?? '',
+                    coupon.description ?? '',
                     textAlign: TextAlign.justify,
                   ),
                 ],

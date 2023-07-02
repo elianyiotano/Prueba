@@ -1,22 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/models/event.dart';
+import 'package:jogo_mobile_app/models/coupon.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/events.service.dart';
+import 'package:jogo_mobile_app/services/coupons.service.dart';
+import 'package:intl/intl.dart';
 
-class EventsPage extends StatefulWidget {
+class CouponsPage extends StatefulWidget {
   @override
-  _EventsPageState createState() => _EventsPageState();
+  _CouponsPageState createState() => _CouponsPageState();
 }
 
-class _EventsPageState extends State<EventsPage> {
-  List<Event> events = [];
+class _CouponsPageState extends State<CouponsPage> {
+  List<Coupon> coupons = [];
 
   @override
   void initState() {
     super.initState();
-    getEventList();
+    getCouponList();
   }
 
   @override
@@ -52,9 +53,9 @@ class _EventsPageState extends State<EventsPage> {
             ),
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: events.length,
+            itemCount: coupons.length,
             itemBuilder: (BuildContext context, int index) {
-              return _buildEventTile(events[index]);
+              return _buildEventTile(coupons[index]);
             },
           ),
         ),
@@ -62,11 +63,10 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 
-  Widget _buildEventTile(Event event) {
-    print(event.date);
+  Widget _buildEventTile(Coupon coupon) {
     return GestureDetector(
       onTap: () {
-        _navigateToEventDetail(event);
+        _navigateToEventDetail(coupon);
       },
       child: Container(
         height: 200,
@@ -75,7 +75,8 @@ class _EventsPageState extends State<EventsPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(11.0),
           image: DecorationImage(
-            image: NetworkImage(event.image ?? ''),
+            image: NetworkImage(coupon.image ??
+                'https://blog.mailup.es/wp-content/uploads/2018/01/evento-cover.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -91,7 +92,7 @@ class _EventsPageState extends State<EventsPage> {
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 child: Text(
-                  event.date ?? '',
+                  "${_formatDate(coupon.validFrom)}" ?? '',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -109,7 +110,7 @@ class _EventsPageState extends State<EventsPage> {
                   borderRadius: BorderRadius.circular(11.0),
                 ),
                 child: Text(
-                  event.place ?? '',
+                  coupon.name ?? '',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -124,20 +125,21 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 
-  void _navigateToEventDetail(Event event) {
-    AutoRouter.of(context).push(DetailRoute(event: event));
+  void _navigateToEventDetail(Coupon coupon) {
+    AutoRouter.of(context).push(DetailRoute(coupon: coupon));
   }
 
-  Future<void> getEventList() async {
+  Future<void> getCouponList() async {
     if (true) {
-      Response response = await EventService().getList(context);
+      Response response = await CouponService().getList(context);
       dynamic res = response.data;
       print(res);
-      if (res['error'] == null && res["success"] != "") {
-        events.clear();
-        res['events'].forEach((value) {
-          events.add(Event.fromJson(value));
+      if (res != "") {
+        coupons.clear();
+        res.forEach((value) {
+          coupons.add(Coupon.fromJson(value));
         });
+        print(coupons[1].image);
         if (mounted) {
           setState(() {});
         }
@@ -145,12 +147,20 @@ class _EventsPageState extends State<EventsPage> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${res['message']}'),
+            content: Text('${res['error']}'),
             duration: Duration(seconds: 4),
             backgroundColor: Colors.red,
           ),
         );
       }
     }
+  }
+
+  String _formatDate(String? date) {
+    if (date != null) {
+      final dateTime = DateTime.parse(date);
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    }
+    return '';
   }
 }

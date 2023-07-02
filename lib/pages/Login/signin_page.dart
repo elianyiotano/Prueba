@@ -162,8 +162,11 @@ class _SignInState extends State<SignIn> {
           authService.authenticated = true;
           authService.email = emailController.text;
           authService.token_auth = res["token"] ?? "";
+
           MyApp.of(context).userData = UserData.fromJson(res);
-          AutoRouter.of(context).replace(const HomeRoute());
+          User user = User.fromJson(res["user"]);
+          
+          AutoRouter.of(context).replace(HomeRoute(user: user));
         }
       } else {
         dynamic errors = res['error'];

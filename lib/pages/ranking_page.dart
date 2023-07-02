@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/events.service.dart';
+import 'package:jogo_mobile_app/services/coupons.service.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 
 class RankingPage extends StatefulWidget {
@@ -14,6 +14,7 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   final List<User> users = [];
   bool isLoading = true;
+  
 
   @override
   void initState() {
@@ -72,12 +73,12 @@ class _RankingPageState extends State<RankingPage> {
                             ),
                             SizedBox(width: 8),
                             CircleAvatar(
-                              backgroundImage: NetworkImage(user.photo ?? ''),
+                              backgroundImage: NetworkImage(user.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                             ),
                           ],
                         ),
                         title: Text(
-                          user.name ?? '',
+                          "${user.firstName} ${user.lastName1}" ?? '',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -134,9 +135,9 @@ class _RankingPageState extends State<RankingPage> {
       Response response = await UserService().ranking(context);
       dynamic res = response.data;
       print(res);
-      if (res['ErrorCode'] == null && res["success"] != "") {
+      if (res != "") {
         users.clear();
-        res['ranking'].forEach((value) {
+        res.forEach((value) {
           users.add(User.fromJson(value));
         });
         if (mounted) {
@@ -148,7 +149,7 @@ class _RankingPageState extends State<RankingPage> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${res['message']}'),
+            content: Text('${res['error']}'),
             duration: Duration(seconds: 4),
             backgroundColor: Colors.red,
           ),
