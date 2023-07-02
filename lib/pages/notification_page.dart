@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/message.dart';
 import 'package:jogo_mobile_app/services/message.service.dart';
 import 'package:intl/intl.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 
 class NotificationPage extends StatefulWidget {
   @override
@@ -37,14 +38,21 @@ class _NotificationPageState extends State<NotificationPage> {
           SectionHeader(title: 'Hoy'),
           SizedBox(height: 5.0),
           if (messagesToday.length == 0) ...[
-                Text("No hay mensajes",
-                    textAlign: TextAlign.center,
-                  )
-              ],
+            Text(
+              "No hay mensajes",
+              textAlign: TextAlign.center,
+            )
+          ],
           ..._buildNotificationTodayCards(),
           SizedBox(height: 20.0),
           SectionHeader(title: 'Anteriores'),
           SizedBox(height: 5.0),
+          if (messagesBefore.length == 0) ...[
+            Text(
+              "No hay mensajes",
+              textAlign: TextAlign.center,
+            )
+          ],
           ..._buildNotificationBeforeCards(),
         ],
       ),
@@ -75,43 +83,42 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   Future<void> getMessage(BuildContext context) async {
-   
-      Response response = await MesageService().getList(context);
-      dynamic res = response.data;
-      print(res);
-      if (res != "") {
-        DateTime currentDate = DateTime.now();
-        String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
-        setState(() {
-          messagesToday.clear();
-          messagesBefore.clear();
-          res.forEach((value) {
-            String dateString = value['timestamp'];
-            DateTime dateTime = DateTime.parse(dateString);
-            String date = DateFormat('yyyy-MM-dd').format(dateTime);
+    Response response = await MesageService().getList(context);
+    dynamic res = response.data;
+    print(res);
+    if (res is List) {
+      DateTime currentDate = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+      setState(() {
+        messagesToday.clear();
+        messagesBefore.clear();
+        res.forEach((value) {
+          String dateString = value['timestamp'];
+          DateTime dateTime = DateTime.parse(dateString);
+          String date = DateFormat('yyyy-MM-dd').format(dateTime);
 
-            if (formattedDate == date) {
-              messagesToday.add(Message.fromJson(value));
-            } else {
-              messagesBefore.add(Message.fromJson(value));
-            }
-          });
-          isLoading = false;
+          if (formattedDate == date) {
+            messagesToday.add(Message.fromJson(value));
+          } else {
+            messagesBefore.add(Message.fromJson(value));
+          }
         });
-      } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${res['error']}'),
-            duration: Duration(seconds: 4),
-            backgroundColor: Colors.red,
-          ),
-        );
-        setState(() {
-          isLoading = false;
-        });
-      }
-     
+        isLoading = false;
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return FailedModal(
+            title: 'Ha ocurrido un error',
+            description: '${res['error']}',
+          );
+        },
+      );
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }
 
