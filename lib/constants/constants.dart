@@ -4,8 +4,7 @@ class ApiConstants {
   static String baseUrl = 'https://loyalty.peppermind.io';
   static String singInEndpoint = '/auth/login';
   static String singUpEndpoint = '/auth/signup';
-  static String sendResetPasswordEmail =
-      '/84bab6ee-fe34-47cb-a6f3-3c32fd7d15c6';
+  static String sendResetPasswordEmail = '/auth/password/reset';
 
   static String getListMessage = '/messages';
 
