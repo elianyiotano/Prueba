@@ -5,6 +5,7 @@ import 'package:jogo_mobile_app/models/coupon.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/coupons.service.dart';
 import 'package:intl/intl.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 
 class CouponsPage extends StatefulWidget {
   @override
@@ -144,13 +145,14 @@ class _CouponsPageState extends State<CouponsPage> {
           setState(() {});
         }
       } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${res['error']}'),
-            duration: Duration(seconds: 4),
-            backgroundColor: Colors.red,
-          ),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return FailedModal(
+              title: 'Ha ocurrido un error',
+              description: '${res['error']}',
+            );
+          },
         );
       }
     }

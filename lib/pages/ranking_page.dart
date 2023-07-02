@@ -5,6 +5,7 @@ import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/coupons.service.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 
 class RankingPage extends StatefulWidget {
   @override
@@ -14,7 +15,6 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   final List<User> users = [];
   bool isLoading = true;
-  
 
   @override
   void initState() {
@@ -68,12 +68,14 @@ class _RankingPageState extends State<RankingPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '${index+1}.',
+                              '${index + 1}.',
                               style: TextStyle(color: Colors.black),
                             ),
                             SizedBox(width: 8),
                             CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
+                              backgroundImage: NetworkImage(user
+                                      .profilePhotoUrl ??
+                                  'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                             ),
                           ],
                         ),
@@ -135,7 +137,7 @@ class _RankingPageState extends State<RankingPage> {
       Response response = await UserService().ranking(context);
       dynamic res = response.data;
       print(res);
-      if (res != "") {
+      if (res is List) {
         users.clear();
         res.forEach((value) {
           users.add(User.fromJson(value));
@@ -146,14 +148,18 @@ class _RankingPageState extends State<RankingPage> {
           });
         }
       } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${res['error']}'),
-            duration: Duration(seconds: 4),
-            backgroundColor: Colors.red,
-          ),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return FailedModal(
+              title: 'Ha ocurrido un error',
+              description: '${res['error']}',
+            );
+          },
         );
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
