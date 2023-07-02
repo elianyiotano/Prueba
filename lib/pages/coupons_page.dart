@@ -29,7 +29,7 @@ class _CouponsPageState extends State<CouponsPage> {
           children: [
             Expanded(
               child: Text(
-                'Próximos eventos',
+                'Descuentos',
                 style: TextStyle(
                   color: Colors.black,
                 ),
