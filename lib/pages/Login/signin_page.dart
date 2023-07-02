@@ -170,14 +170,12 @@ class _SignInState extends State<SignIn> {
         }
       } else {
         dynamic errors = res['error'];
-        String castedErrors = errors.toString();
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return const FailedModal(
+            return FailedModal(
               title: 'Error de inicio de sesión',
-              description:
-                  'Usuario o contraseña incorrecta. Por favor, ingrese su usuario y contraseña correcto.',
+              description: errors,
             );
           },
         );
