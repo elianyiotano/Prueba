@@ -48,7 +48,7 @@ class _CouponsPageState extends State<CouponsPage> {
           height: 600,
           child: coupons.length == 0
               ? Text(
-                  "No cupones disponibles",
+                  "No hay cupones disponibles",
                   textAlign: TextAlign.center,
                 )
               : GridView.builder(

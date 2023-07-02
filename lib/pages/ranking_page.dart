@@ -57,6 +57,12 @@ class _RankingPageState extends State<RankingPage> {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (users.length == 0) ...[
+                  Text(
+                    "No hay un ranking disponible",
+                    textAlign: TextAlign.center,
+                  )
+                ],
                 Expanded(
                   child: ListView.separated(
                     itemCount: users.length,
