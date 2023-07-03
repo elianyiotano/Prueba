@@ -49,7 +49,7 @@ class _SignInState extends State<SignIn> {
                 // EmailInput
                 TextFormGlobal(
                   controller: emailController,
-                  text: 'Email',
+                  text: 'Correo Electrónico',
                   obscure: false,
                   textInputType: TextInputType.emailAddress,
                 ),
@@ -59,7 +59,7 @@ class _SignInState extends State<SignIn> {
                 // PasswordInput
                 PasswordTextForm(
                   controller: passwordController,
-                  text: 'Password',
+                  text: 'Contraseña',
                   textInputType: TextInputType.text,
                   onVisibilityChanged: (bool obscure) {},
                 ),
@@ -73,7 +73,7 @@ class _SignInState extends State<SignIn> {
                   child: const Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "Forgot password?",
+                      "Has olvidado la contraseña?",
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
@@ -96,7 +96,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     child: const Text(
-                      'Sign In',
+                      'Iniciar Sesión',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -118,14 +118,14 @@ class _SignInState extends State<SignIn> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Don\'t have an account?'),
+            const Text('¿No tienes una cuenta?'),
             TextButton(
               onPressed: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => SignUp()));
               },
               child: const Text(
-                "Sign Up",
+                "Regístrate",
                 style: TextStyle(
                   color: Color.fromRGBO(49, 220, 118, 1.0),
                 ),

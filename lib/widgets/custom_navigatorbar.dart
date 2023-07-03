@@ -26,7 +26,7 @@ class CustomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
-          label: 'Eventos',
+          label: 'Cupones',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications_active_outlined),

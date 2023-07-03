@@ -32,13 +32,13 @@ class _RankingPageState extends State<RankingPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Color.fromARGB(255, 3, 19, 123),
+          color: Colors.green,
         ),
         title: const Row(
           children: [
             Expanded(
               child: Text(
-                'Ranking',
+                'Clasificación',
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -98,35 +98,35 @@ class _RankingPageState extends State<RankingPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 4),
-                            Text(
-                              '${user.points ?? ''} Pts',
-                              style: TextStyle(color: Colors.black),
-                            ),
+                            // Text(
+                            //   '${user.points ?? ''} Pts',
+                            //   style: TextStyle(color: Colors.black),
+                            // ),
                           ],
                         ),
-                        trailing: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SizedBox(height: 4),
-                            Text(
-                              'Tipo',
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .fontSize,
-                                color: Color.fromARGB(255, 57, 56, 56),
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              user.category ?? '',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // trailing: Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   children: [
+                        //     SizedBox(height: 4),
+                            // Text(
+                            //   'Tipo',
+                            //   style: TextStyle(
+                            //     fontSize: Theme.of(context)
+                            //         .textTheme
+                            //         .subtitle1!
+                            //         .fontSize,
+                            //     color: Color.fromARGB(255, 57, 56, 56),
+                            //   ),
+                            // ),
+                            // SizedBox(height: 4),
+                            // Text(
+                            //   user.category ?? '',
+                            //   style: TextStyle(
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
+                          // ],
+                        // ),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       );

@@ -69,7 +69,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Category: ${user!.category}',
+                  'Categoría: ${user!.category}',
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins',
@@ -91,7 +91,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Events',
+                          'Eventos',
                           style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Poppins',
@@ -116,7 +116,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Points',
+                          'Puntos',
                           style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Poppins',
@@ -140,7 +140,7 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       ListTile(
                         title: const Text(
-                          'My Points',
+                          'Mis Puntos',
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
@@ -238,7 +238,7 @@ class ProfilePage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      'Recent Activity',
+                      'Actividad Reciente',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Poppins',

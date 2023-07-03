@@ -82,7 +82,7 @@ class _SignUpState extends State<SignUp> {
                 //PhoneInput
                 TextFormGlobal(
                   controller: phoneController,
-                  text: 'Phone Number',
+                  text: 'Teléfono',
                   obscure: false,
                   textInputType: TextInputType.phone,
                 ),
@@ -91,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                 //EmailInput
                 TextFormGlobal(
                   controller: emailController,
-                  text: 'Email',
+                  text: 'Correo Electrónico',
                   obscure: false,
                   textInputType: TextInputType.emailAddress,
                 ),
@@ -100,7 +100,7 @@ class _SignUpState extends State<SignUp> {
                 //PasswordInput
                 PasswordTextForm(
                   controller: passwordController,
-                  text: 'Password',
+                  text: 'Contraseña',
                   textInputType: TextInputType.text,
                   onVisibilityChanged: (bool obscure) {},
                 ),
@@ -116,7 +116,7 @@ class _SignUpState extends State<SignUp> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: Text('Terms & Privacy Policy'),
+                          title: Text('Términos y Política de Privacidad'),
                           content: Text(
                             'Here you can display the terms and privacy policy.',
                           ),
@@ -143,7 +143,7 @@ class _SignUpState extends State<SignUp> {
                         title: Row(
                           children: [
                             Text(
-                              'I accepted',
+                              'Acepto ',
                               style: TextStyle(
                                 height: 1,
                                 color: const Color.fromARGB(255, 55, 54, 54),
@@ -158,7 +158,7 @@ class _SignUpState extends State<SignUp> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       AlertDialog(
-                                    title: Text('Terms & Privacy Policy'),
+                                    title: Text('Términos y Política de Privacidad'),
                                     content: Text(
                                       'Here you can display the terms and privacy policy.',
                                     ),
@@ -172,7 +172,7 @@ class _SignUpState extends State<SignUp> {
                                 );
                               },
                               child: Text(
-                                'Terms & Privacy Policy',
+                                'Términos y Política de Privacidad',
                                 style: TextStyle(
                                   height: 1,
                                   color: Colors.green,
@@ -217,7 +217,7 @@ class _SignUpState extends State<SignUp> {
                           )
                         ]),
                     child: const Text(
-                      'Sign Up',
+                      'Registrar',
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w600),
                     ),
