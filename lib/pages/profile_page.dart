@@ -4,6 +4,8 @@ import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:image_picker/image_picker.dart';
+
 class ProfilePage extends StatelessWidget {
   final User user;
 
@@ -19,6 +21,27 @@ class ProfilePage extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.grey,
+            ),
+            onSelected: (value) {
+              if (value == 'photo') {
+                _showChangeProfilePhotoModal(context);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'photo',
+                  child: Text('Editar foto'),
+                ),
+              ];
+            },
+          ),
+        ],
       ),
       body: isLoading
           ? Center(
@@ -46,7 +69,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                       image: DecorationImage(
-                        image: NetworkImage(user?.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
+                        image: NetworkImage(user?.profilePhotoUrl ??
+                            'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -244,10 +268,9 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 35),
-                
-              if (activities.length == 0) ...[
-                Text("No hay actividades registradas")
-              ],
+                if (activities.length == 0) ...[
+                  Text("No hay actividades registradas")
+                ],
                 Expanded(
                   child: ListView.separated(
                     itemCount: activities.length,
@@ -323,5 +346,70 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  
+  void _showChangeProfilePhotoModal(BuildContext context) async {
+    final picker = ImagePicker();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Cambiar Foto de Perfil',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16),
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text('Tomar foto'),
+                onTap: () async {
+                  final pickedFile = await picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+
+                  if (pickedFile != null) {
+                    // Aquí puedes guardar la imagen en tu modelo de usuario
+                    // o realizar cualquier otra operación necesaria
+                  }
+
+                  Navigator.pop(context); // Cerrar el modal
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.image),
+                title: Text('Seleccionar de la galería'),
+                onTap: () async {
+                  final pickedFile = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+
+                  if (pickedFile != null) {
+                    // Aquí puedes guardar la imagen en tu modelo de usuario
+                    // o realizar cualquier otra operación necesaria
+                  }
+
+                  Navigator.pop(context); // Cerrar el modal
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

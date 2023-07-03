@@ -11,4 +11,7 @@ class ApiConstants {
   static String postQr = '/coupons/validate';
 
   static String getRanking = '/users/ranking';
+
+  static String getPhoto = '/users/profile_photo';
+  static String postPhoto = '/users/profile_photo';
 }
