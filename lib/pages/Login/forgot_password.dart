@@ -58,7 +58,7 @@ class _ForgotPassword extends State<ForgotPassword> {
                 ),
                 const SizedBox(height: 15),
                 const Text(
-                  'Por favor, introduzca una su correo electrónico para restablecer su contraseña.',
+                  'Por favor, introduzca su correo electrónico para restablecer su contraseña.',
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 20),
