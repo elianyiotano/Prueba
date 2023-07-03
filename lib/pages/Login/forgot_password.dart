@@ -4,21 +4,25 @@ import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/success_modal.dart';
-import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 
-class ForgotPassword extends StatelessWidget {
-  final TextEditingController forgotpasswordController =
-      TextEditingController();
-  UserService userService = UserService();
-
+class ForgotPassword extends StatefulWidget {
   @override
+  _ForgotPassword createState() => _ForgotPassword();
+}
+
+class _ForgotPassword extends State<ForgotPassword> {
+  final TextEditingController emailController = TextEditingController();
+  final _formfield = GlobalKey<FormState>();
+  UserService userService = UserService();
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(15.0),
+            child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(15.0),
+          child: Form(
+            key: _formfield,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -26,16 +30,16 @@ class ForgotPassword extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   child: Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/JOGO.png',
                     height: 150,
-                    width: 280,
+                    width: 150,
                   ),
                 ),
                 const SizedBox(height: 22),
                 const Text(
                   'Recuperar contraseña',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -46,16 +50,33 @@ class ForgotPassword extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 //PasswordInput
-                TextFormGlobal(
-                  controller: forgotpasswordController,
-                  text: 'Contraseña',
-                  obscure: true,
-                  textInputType: TextInputType.text,
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: "Correo electrónico",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                  validator: (value) {
+                    bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[A-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value!);
+                    if (value.isEmpty) {
+                      return "Campo requerido.";
+                    } else if (!emailValid) {
+                      return "Ingrese un correo valido";
+                    }
+                  },
                 ),
                 const SizedBox(height: 25),
                 InkWell(
                   onTap: () {
-                    sendForgotPasswordEmail(context);
+                    if (_formfield.currentState!.validate()) {
+                      sendForgotPasswordEmail(context);
+                    }
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -79,7 +100,7 @@ class ForgotPassword extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        )),
       ),
     );
   }
@@ -90,8 +111,8 @@ class ForgotPassword extends StatelessWidget {
       backgroundColor: Colors.green,
     ));
 
-    Response response = await userService.forgotPassword(
-        context, forgotpasswordController.text);
+    Response response =
+        await userService.forgotPassword(context, emailController.text);
     dynamic res = response.data;
     if (ModalRoute.of(context)!.isCurrent) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
