@@ -91,7 +91,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Future<void> getMessage(BuildContext context) async {
     Response response = await MesageService().getList(context);
     dynamic res = response.data;
-    print(res);
+    
     if (res is List) {
       DateTime currentDate = DateTime.now();
       String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);

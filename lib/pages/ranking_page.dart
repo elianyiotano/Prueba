@@ -141,7 +141,7 @@ class _RankingPageState extends State<RankingPage> {
     if (true) {
       Response response = await UserService().ranking(context);
       dynamic res = response.data;
-      print(res);
+     
       if (res is List) {
         users.clear();
         res.forEach((value) {
