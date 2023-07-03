@@ -52,7 +52,9 @@ class _RankingPageState extends State<RankingPage> {
       ),
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -24,38 +24,44 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(10.0),
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Text('Notificaciones',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600,
-                    height: 30.0 / 22.0,
-                  ))),
-          SectionHeader(title: 'Hoy'),
-          SizedBox(height: 5.0),
-          if (messagesToday.length == 0) ...[
-            Text(
-              "No hay mensajes",
-              textAlign: TextAlign.center,
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
             )
-          ],
-          ..._buildNotificationTodayCards(),
-          SizedBox(height: 20.0),
-          SectionHeader(title: 'Anteriores'),
-          SizedBox(height: 5.0),
-          if (messagesBefore.length == 0) ...[
-            Text(
-              "No hay mensajes",
-              textAlign: TextAlign.center,
-            )
-          ],
-          ..._buildNotificationBeforeCards(),
-        ],
-      ),
+          : ListView(
+              padding: EdgeInsets.all(10.0),
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Text('Notificaciones',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                          height: 30.0 / 22.0,
+                        ))),
+                SectionHeader(title: 'Hoy'),
+                SizedBox(height: 5.0),
+                if (messagesToday.length == 0) ...[
+                  Text(
+                    "No hay mensajes",
+                    textAlign: TextAlign.center,
+                  )
+                ],
+                ..._buildNotificationTodayCards(),
+                SizedBox(height: 20.0),
+                SectionHeader(title: 'Anteriores'),
+                SizedBox(height: 5.0),
+                if (messagesBefore.length == 0) ...[
+                  Text(
+                    "No hay mensajes",
+                    textAlign: TextAlign.center,
+                  )
+                ],
+                ..._buildNotificationBeforeCards(),
+              ],
+            ),
     );
   }
 

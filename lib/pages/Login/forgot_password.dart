@@ -97,7 +97,7 @@ class ForgotPassword extends StatelessWidget {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
 
-    if (res["success"] != "") {
+    if (res["message"] != "") {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -108,7 +108,6 @@ class ForgotPassword extends StatelessWidget {
           );
         },
       );
-
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => SignIn()),
