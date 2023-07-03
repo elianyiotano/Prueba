@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/pages/Login/signup_page.dart';
+import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 
 class TabNavigation extends StatelessWidget {
-  const TabNavigation({super.key});
+  const TabNavigation({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 374,
       height: 60,
       decoration: BoxDecoration(
         color: const Color(0xFFF6F7FF),
@@ -17,16 +16,15 @@ class TabNavigation extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Row(
         children: [
-          Expanded( // Envuelve el Row con Expanded
+          Expanded(
             child: TabItem(
               label: 'Iniciar sesión',
               isSelected: true,
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ),
           const SizedBox(width: 4.0),
-          Expanded( // Envuelve el Row con Expanded
+          Expanded(
             child: TabItem(
               label: 'Registrarse',
               isSelected: false,
@@ -49,7 +47,8 @@ class TabItem extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onPressed;
 
-  const TabItem({super.key, 
+  const TabItem({
+    Key? key,
     required this.label,
     required this.isSelected,
     required this.onPressed,
@@ -66,13 +65,13 @@ class TabItem extends StatelessWidget {
           color: isSelected ? Colors.white : const Color(0xFFF6F7FF),
           borderRadius: isSelected ? BorderRadius.circular(44) : null,
         ),
-        child: Center( // Centra el contenido del TabItem
+        child: Center(
           child: Text(
             label,
             style: TextStyle(
               fontSize: 15,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: isSelected ? Colors.black : Color(0xFF525E7B),
+              color: isSelected ? Colors.black : const Color(0xFF525E7B),
             ),
           ),
         ),
