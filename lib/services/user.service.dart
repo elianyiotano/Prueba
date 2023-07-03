@@ -46,15 +46,10 @@ class UserService {
 
   Future<dynamic> forgotPassword(context, String email) async {
     try {
-      AuthService authService = MyApp.of(context).authService;
-      String url = ApiConstants.baseUrl + ApiConstants.sendResetPasswordEmail;
-      Response response = await _dio.post(url,
-          options: Options(
-            headers: {
-              "Authorization": "Bearer " + authService.token_auth,
-            },
-          ),
-          data: {"redirect_url": "", "email": email});
+      Response response = await _dio.post(
+        ApiConstants.baseUrl + ApiConstants.sendResetPasswordEmail,
+        data: {'email': email},
+      );
       return response;
     } on DioError catch (e) {
       return e.response!;

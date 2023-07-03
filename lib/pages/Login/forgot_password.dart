@@ -45,10 +45,9 @@ class ForgotPassword extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 20),
-                
                 TextFormGlobal(
                   controller: forgotpasswordController,
-                  text: 'Contraseña',
+                  text: 'Correo Electrónico',
                   obscure: true,
                   textInputType: TextInputType.text,
                 ),
@@ -97,7 +96,7 @@ class ForgotPassword extends StatelessWidget {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
 
-    if (res["message"] != "") {
+    if (res['error'] == null && res["message"] != "") {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -113,14 +112,12 @@ class ForgotPassword extends StatelessWidget {
         MaterialPageRoute(builder: (context) => SignIn()),
       );
     } else {
-      List<dynamic> errors = res['errors'];
-      List<String> castedErrors = errors.cast<String>();
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return FailedModal(
-            title: 'Error en el envío',
-            description: castedErrors.join('\n'),
+            title: 'Error en el envío del correo ',
+            description: res['error'],
           );
         },
       );
