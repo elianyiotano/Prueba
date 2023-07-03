@@ -41,11 +41,11 @@ class _SignInState extends State<SignIn> {
                 children: [
                   Image.asset(
                     'assets/images/JOGO.png',
-                    height: 150,
-                    width: 150,
+                    height: 200,
+                    width: 200,
                   ),
                   TabNavigation(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                   // EmailInput
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
@@ -145,35 +145,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  SocialLogin(),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Ya tienes una cuenta?",
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUp()));
-                          },
-                          child: Text(
-                            "Registrarse",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.green,
-                                fontWeight: FontWeight.normal,
-                                height: 1),
-                          )),
-                    ],
-                  ),
                 ],
               ),
             ),

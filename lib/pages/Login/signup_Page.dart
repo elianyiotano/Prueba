@@ -312,32 +312,6 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Ya tienes una cuenta?",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignIn()));
-                            },
-                            child: Text(
-                              "Iniciar sesión",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.green,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )),
-                      ],
-                    ),
                   ]),
             ),
           ),
