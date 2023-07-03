@@ -1,12 +1,9 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
-import 'package:jogo_mobile_app/widgets/success_modal.dart';
 import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 
 class SignUp extends StatefulWidget {
@@ -49,7 +46,6 @@ class _SignUpState extends State<SignUp> {
 
                 const SizedBox(height: 15),
 
-                //NameInput
                 TextFormGlobal(
                   controller: nameController,
                   text: 'Nombre',
@@ -58,10 +54,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 10),
 
-                Row(
-                  children: [],
-                ),
-                //NameInput
                 TextFormGlobal(
                   controller: lastName1Controller,
                   text: 'Primer Apellido',
@@ -70,7 +62,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 10),
 
-                //NameInput
                 TextFormGlobal(
                   controller: lastName2Controller,
                   text: 'Segundo Apellido',
@@ -79,7 +70,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 10),
 
-                //PhoneInput
                 TextFormGlobal(
                   controller: phoneController,
                   text: 'Teléfono',
@@ -88,7 +78,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 10),
 
-                //EmailInput
                 TextFormGlobal(
                   controller: emailController,
                   text: 'Correo Electrónico',
@@ -97,7 +86,7 @@ class _SignUpState extends State<SignUp> {
                 ),
 
                 const SizedBox(height: 10),
-                //PasswordInput
+
                 PasswordTextForm(
                   controller: passwordController,
                   text: 'Contraseña',
@@ -106,7 +95,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 10),
 
-                //Accept Terms and policy
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.0),
@@ -116,8 +104,8 @@ class _SignUpState extends State<SignUp> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: Text('Términos y Política de Privacidad'),
-                          content: Text(
+                          title: const Text('Términos y Política de Privacidad'),
+                          content: const Text(
                             'Here you can display the terms and privacy policy.',
                           ),
                           actions: [
@@ -142,11 +130,11 @@ class _SignUpState extends State<SignUp> {
                       child: CheckboxListTile(
                         title: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Acepto ',
                               style: TextStyle(
                                 height: 1,
-                                color: const Color.fromARGB(255, 55, 54, 54),
+                                color: Color.fromARGB(255, 55, 54, 54),
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -158,8 +146,8 @@ class _SignUpState extends State<SignUp> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       AlertDialog(
-                                    title: Text('Términos y Política de Privacidad'),
-                                    content: Text(
+                                    title: const Text('Términos y Política de Privacidad'),
+                                    content: const Text(
                                       'Here you can display the terms and privacy policy.',
                                     ),
                                     actions: [
@@ -171,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 );
                               },
-                              child: Text(
+                              child: const Text(
                                 'Términos y Política de Privacidad',
                                 style: TextStyle(
                                   height: 1,

@@ -1,9 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/user.dart';
-import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/coupons.service.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 

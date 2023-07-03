@@ -5,7 +5,9 @@ import 'package:jogo_mobile_app/widgets/text.form.global.dart';
 class ChangePasswordPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();
-  final TextStyle sectionHeaderStyle = TextStyle(fontSize: 22);
+  final TextStyle sectionHeaderStyle = const TextStyle(fontSize: 22);
+
+  ChangePasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class ChangePasswordPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 20),
-                //PasswordInput
+
                 TextFormGlobal(
                   controller: passwordController,
                   text: 'Contraseña',
@@ -50,7 +52,6 @@ class ChangePasswordPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
 
-                //ConfirmPasswordInput
                 TextFormGlobal(
                   controller: confirmController,
                   text: 'Confirmar contraseña',

@@ -45,7 +45,7 @@ class ForgotPassword extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 20),
-                //PasswordInput
+                
                 TextFormGlobal(
                   controller: forgotpasswordController,
                   text: 'Contraseña',
@@ -85,7 +85,7 @@ class ForgotPassword extends StatelessWidget {
   }
 
   Future<void> sendForgotPasswordEmail(context) async {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Enviando correo de recuperación de contraseña...'),
       backgroundColor: Colors.green,
     ));

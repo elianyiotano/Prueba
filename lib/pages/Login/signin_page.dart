@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +44,6 @@ class _SignInState extends State<SignIn> {
 
                 const SizedBox(height: 15),
 
-                // EmailInput
                 TextFormGlobal(
                   controller: emailController,
                   text: 'Correo Electrónico',
@@ -56,7 +53,6 @@ class _SignInState extends State<SignIn> {
 
                 const SizedBox(height: 10),
 
-                // PasswordInput
                 PasswordTextForm(
                   controller: passwordController,
                   text: 'Contraseña',

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/providers/ui_providers.dart';
 import 'package:provider/provider.dart';

@@ -44,7 +44,7 @@ class _CouponsPageState extends State<CouponsPage> {
         elevation: 0,
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
               ),
@@ -54,12 +54,12 @@ class _CouponsPageState extends State<CouponsPage> {
               child: Container(
                 height: 600,
                 child: coupons.length == 0
-                    ? Text(
+                    ? const Text(
                         "No hay cupones disponibles",
                         textAlign: TextAlign.center,
                       )
                     : GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
@@ -92,13 +92,13 @@ class _CouponsPageState extends State<CouponsPage> {
           future: loadImage(coupon.image),
           builder: (BuildContext context, AsyncSnapshot<ImageProvider?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                 ),
               );
             } else if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text('Error al cargar la imagen'),
               );
             } else {
@@ -124,7 +124,7 @@ class _CouponsPageState extends State<CouponsPage> {
                       ),
                       child: Text(
                         "${_formatDate(coupon.validFrom)}" ?? '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -142,7 +142,7 @@ class _CouponsPageState extends State<CouponsPage> {
                       ),
                       child: Text(
                         coupon.name ?? '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -170,7 +170,6 @@ class _CouponsPageState extends State<CouponsPage> {
         Response response = await dio.get(imageUrl, options: Options(responseType: ResponseType.bytes));
         return MemoryImage(response.data);
       } catch (e) {
-        print('Error loading image: $e');
         return null;
       }
     } else {
@@ -182,13 +181,13 @@ class _CouponsPageState extends State<CouponsPage> {
     if (true) {
       Response response = await CouponService().getList(context);
       dynamic res = response.data;
-      print(res);
+      
       if (res is List) {
         coupons.clear();
         res.forEach((value) {
           coupons.add(Coupon.fromJson(value));
         });
-        print(coupons[1].image);
+
         if (mounted) {
           setState(() {
             isLoading = false;

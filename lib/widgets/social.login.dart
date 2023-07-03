@@ -11,7 +11,7 @@ class SocialLogin extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: const Text(
-            'Or sign in with',
+            'O inicia sesión con',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
           ),
         ),

@@ -1,14 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:auto_route/auto_route.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:jogo_mobile_app/pages/ranking_page.dart';
 class ProfilePage extends StatelessWidget {
   final User user;
 
@@ -327,47 +322,4 @@ class ProfilePage extends StatelessWidget {
             ),
     );
   }
-
-  // Future<void> getProfile(BuildContext context) async {
-  //   setState(() {
-  //           isLoading = false;
-  //         });
-    
-    // try {
-    //   Response response = await UserService().getUserProfileData(context);
-    //   dynamic res = response.data;
-    //   print(res);
-    //   if (res['ErrorCode'] == null && res["success"] != "") {
-    //     user = User.fromJson(res['profile']);
-    //     activities.clear();
-    //     res['activity'].forEach((value) {
-    //       activities.add(Activity.fromJson(value));
-    //     });
-    //     if (mounted) {
-    //       setState(() {
-    //         isLoading = false;
-    //       });
-    //     }
-    //   } else {
-    //     ScaffoldMessenger.of(context).clearSnackBars();
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text('${res['message']}'),
-    //         duration: const Duration(seconds: 4),
-    //         backgroundColor: Colors.red,
-    //       ),
-    //     );
-    //   }
-    // } catch (error) {
-    //   print(error.toString());
-    //   ScaffoldMessenger.of(context).clearSnackBars();
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: const Text('An error occurred.'),
-    //       duration: const Duration(seconds: 4),
-    //       backgroundColor: Colors.red,
-    //     ),
-    //   );
-    // }
-  // }
 }
