@@ -15,13 +15,18 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _formfield = GlobalKey<FormState>();
+  bool passToggle = true;
+  String? termsError;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastName1Controller = TextEditingController();
   final TextEditingController lastName2Controller = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  bool? isChecked = false;
+  final TextEditingController referralCodeController = TextEditingController();
+
+  bool? isChecked = true;
   UserService userService = UserService();
 
   @override
@@ -32,198 +37,303 @@ class _SignUpState extends State<SignUp> {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 169,
-                    width: 300,
-                  ),
-                ),
-
-                const SizedBox(height: 15),
-
-                //NameInput
-                TextFormGlobal(
-                  controller: nameController,
-                  text: 'Nombre',
-                  obscure: false,
-                  textInputType: TextInputType.text,
-                ),
-                const SizedBox(height: 10),
-
-                Row(
-                  children: [],
-                ),
-                //NameInput
-                TextFormGlobal(
-                  controller: lastName1Controller,
-                  text: 'Primer Apellido',
-                  obscure: false,
-                  textInputType: TextInputType.text,
-                ),
-                const SizedBox(height: 10),
-
-                //NameInput
-                TextFormGlobal(
-                  controller: lastName2Controller,
-                  text: 'Segundo Apellido',
-                  obscure: false,
-                  textInputType: TextInputType.text,
-                ),
-                const SizedBox(height: 10),
-
-                //PhoneInput
-                TextFormGlobal(
-                  controller: phoneController,
-                  text: 'Phone Number',
-                  obscure: false,
-                  textInputType: TextInputType.phone,
-                ),
-                const SizedBox(height: 10),
-
-                //EmailInput
-                TextFormGlobal(
-                  controller: emailController,
-                  text: 'Email',
-                  obscure: false,
-                  textInputType: TextInputType.emailAddress,
-                ),
-
-                const SizedBox(height: 10),
-                //PasswordInput
-                PasswordTextForm(
-                  controller: passwordController,
-                  text: 'Password',
-                  textInputType: TextInputType.text,
-                  onVisibilityChanged: (bool obscure) {},
-                ),
-                const SizedBox(height: 10),
-
-                //Accept Terms and policy
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: Text('Terms & Privacy Policy'),
-                          content: Text(
-                            'Here you can display the terms and privacy policy.',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text('Close'),
-                            ),
-                          ],
+            child: Form(
+              key: _formfield,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/JOGO.png',
+                      height: 150,
+                      width: 150,
+                    ),
+                    //referralCodeController
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: referralCodeController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Código de referencia",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
-                      );
-                    },
-                    child: Container(
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    //NameController
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: nameController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Nombre",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo requerido.";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    //LastNameController
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: lastName1Controller,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Primer apellido",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo requerido.";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    //SecondLastNameController
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: lastName2Controller,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Segundo apellido",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo requerido.";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    //PhoneController
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      controller: phoneController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Teléfono",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo requerido.";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    //EmailController
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Correo electrónico",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      validator: (value) {
+                        bool emailValid = RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[A-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value!);
+                        if (value.isEmpty) {
+                          return "Campo requerido.";
+                        } else if (!emailValid) {
+                          return "Ingrese un correo valido";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    //PasswordInput
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: passwordController,
+                      obscureText: passToggle,
+                      decoration: InputDecoration(
+                          labelText: "Contraseña",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          suffix: InkWell(
+                            onTap: () {
+                              setState(() {
+                                passToggle = !passToggle;
+                              });
+                            },
+                            child: Icon(
+                              passToggle
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              size: 18,
+                            ),
+                          )),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Campo requerido.";
+                        } else if (passwordController.text.length < 6) {
+                          return "Su contraseña debe contener un mínimo 6 caracteres";
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    //Accept Terms and policy
+                    Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 1),
-                        ],
-                        color: Color.fromARGB(255, 235, 238, 235),
                       ),
-                      child: CheckboxListTile(
-                        title: Row(
-                          children: [
-                            Text(
-                              'I accepted',
-                              style: TextStyle(
-                                height: 1,
-                                color: const Color.fromARGB(255, 55, 54, 54),
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text('Terms & Privacy Policy'),
+                              content: Text(
+                                'Here you can display the terms and privacy policy.',
                               ),
-                            ),
-                            const SizedBox(width: 4),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: Text('Terms & Privacy Policy'),
-                                    content: Text(
-                                      'Here you can display the terms and privacy policy.',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('Close'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Terms & Privacy Policy',
-                                style: TextStyle(
-                                  height: 1,
-                                  color: Colors.green,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text('Close'),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                        value: isChecked,
-                        activeColor: Colors.transparent,
-                        checkColor: Colors.green,
-                        tileColor: Colors.transparent,
-                        contentPadding: EdgeInsets.zero,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
+                          );
                         },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 1),
+                            ],
+                            color: Color.fromARGB(255, 235, 238, 235),
+                          ),
+                          child: CheckboxListTile(
+                            title: Row(
+                              children: [
+                                Text(
+                                  'I accepted',
+                                  style: TextStyle(
+                                    height: 1,
+                                    color:
+                                        const Color.fromARGB(255, 55, 54, 54),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: Text('Terms & Privacy Policy'),
+                                        content: Text(
+                                          'Here you can display the terms and privacy policy.',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text('Close'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Terms & Privacy Policy',
+                                    style: TextStyle(
+                                      height: 1,
+                                      color: Colors.green,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            value: isChecked,
+                            activeColor: Colors.transparent,
+                            checkColor: Colors.green,
+                            tileColor: Colors.transparent,
+                            contentPadding: EdgeInsets.zero,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            onChanged: (value) {
+                              setState(() {
+                                //isChecked = value!;
+                                isChecked = true;
+                              });
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
 
-                const SizedBox(height: 25),
-                InkWell(
-                  onTap: () {
-                    createUsers(context);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 55,
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(49, 220, 118, 1.0),
-                        borderRadius: BorderRadius.circular(6),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                          )
-                        ]),
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
+                    const SizedBox(height: 15),
+                    InkWell(
+                      onTap: () {
+                        if (_formfield.currentState!.validate()) {
+                          createUsers(context);
+                        }
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(49, 220, 118, 1.0),
+                            borderRadius: BorderRadius.circular(6),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 10,
+                              )
+                            ]),
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w600),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-                const SocialLogin(),
-              ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Ya tienes una cuenta?",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignIn()));
+                            },
+                            child: Text(
+                              "Iniciar sesión",
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.green),
+                            )),
+                      ],
+                    ),
+                  ]),
             ),
           ),
         ),
@@ -241,12 +351,14 @@ class _SignUpState extends State<SignUp> {
       );
 
       Response response = await userService.create(
-          emailController.text,
-          passwordController.text,
-          nameController.text,
-          lastName1Controller.text,
-          lastName2Controller.text,
-          phoneController.text);
+        emailController.text,
+        passwordController.text,
+        nameController.text,
+        lastName1Controller.text,
+        lastName2Controller.text,
+        phoneController.text,
+        referralCodeController.text,
+      );
       dynamic res = response.data;
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -273,68 +385,5 @@ class _SignUpState extends State<SignUp> {
         // ignore: use_build_context_synchronously
       }
     }
-  }
-}
-
-class PasswordTextForm extends StatefulWidget {
-  final TextEditingController controller;
-  final String text;
-  final TextInputType textInputType;
-  final ValueChanged<bool> onVisibilityChanged;
-
-  const PasswordTextForm({
-    required this.controller,
-    required this.text,
-    required this.textInputType,
-    required this.onVisibilityChanged,
-  });
-
-  @override
-  _PasswordTextFormState createState() => _PasswordTextFormState();
-}
-
-class _PasswordTextFormState extends State<PasswordTextForm> {
-  bool obscure = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      padding: const EdgeInsets.only(top: 3, left: 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(6),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 1),
-        ],
-      ),
-      child: TextFormField(
-        controller: widget.controller,
-        keyboardType: widget.textInputType,
-        obscureText: obscure,
-        style: const TextStyle(fontSize: 16),
-        decoration: InputDecoration(
-          hintText: widget.text,
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.only(top: 15),
-          hintStyle: const TextStyle(
-            fontSize: 16,
-            height: 1,
-          ),
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                obscure = !obscure;
-              });
-              widget.onVisibilityChanged(obscure);
-            },
-            icon: Icon(
-              obscure ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
