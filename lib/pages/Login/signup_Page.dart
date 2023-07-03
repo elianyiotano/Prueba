@@ -4,8 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
-import 'package:jogo_mobile_app/widgets/social.login.dart';
-import 'package:jogo_mobile_app/widgets/text.form.global.dart';
+import 'package:jogo_mobile_app/widgets/tab_navigation_sign_Up.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -48,6 +47,8 @@ class _SignUpState extends State<SignUp> {
                       height: 150,
                       width: 150,
                     ),
+                    TabNavigationSignUp(),
+                    const SizedBox(height: 20),
                     //referralCodeController
                     TextFormField(
                       keyboardType: TextInputType.text,

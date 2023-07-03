@@ -11,7 +11,7 @@ import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
-import 'package:jogo_mobile_app/widgets/text.form.global.dart';
+import 'package:jogo_mobile_app/widgets/tab_navigation.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -44,6 +44,8 @@ class _SignInState extends State<SignIn> {
                     height: 150,
                     width: 150,
                   ),
+                  TabNavigation(),
+                  const SizedBox(height: 20),
                   // EmailInput
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
