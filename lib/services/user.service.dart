@@ -19,7 +19,7 @@ class UserService {
   }
 
   Future<Response> create(String email, String password,
-      String name, String lastName1, String lastName2, String phone) async {
+      String name, String lastName1, String lastName2, String phone, String referralCode) async {
     try {
       Response response = await _dio.post(
         ApiConstants.baseUrl + ApiConstants.singUpEndpoint,
@@ -31,7 +31,7 @@ class UserService {
           'password': password,
           'password_confirmation': password,
           'phone_number': phone,
-          "referral_code": ""
+          "referral_code": referralCode,
         },
       );
       return response;
