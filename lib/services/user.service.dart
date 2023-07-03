@@ -18,6 +18,35 @@ class UserService {
     }
   }
 
+  Future<Response> addPhoto(context, photo) async {
+    try {
+      AuthService authService = MyApp.of(context).authService;
+
+      FormData formData = FormData.fromMap({
+        'profile_photo': await MultipartFile.fromFile(photo.path,
+            filename: 'profile_photo.jpg'),
+      });
+
+      Response response = await _dio.post(
+        ApiConstants.baseUrl + ApiConstants.postPhoto,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer " + authService.token_auth,
+          },
+        ),
+        data: formData,
+      );
+
+      return response;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!;
+      } else {
+        throw Exception('Error de respuesta nula');
+      }
+    }
+  }
+
   Future<Response> create(String email, String password,
       String name, String lastName1, String lastName2, String phone) async {
     try {

@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jogo_mobile_app/services/user.service.dart';
 
 class ProfilePage extends StatelessWidget {
   final User user;
@@ -13,6 +16,7 @@ class ProfilePage extends StatelessWidget {
 
   List<Activity> activities = [];
   bool isLoading = false;
+  UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -383,11 +387,8 @@ class ProfilePage extends StatelessWidget {
                   );
 
                   if (pickedFile != null) {
-                    // Aquí puedes guardar la imagen en tu modelo de usuario
-                    // o realizar cualquier otra operación necesaria
+                    sendPhoto(context, pickedFile);
                   }
-
-                  Navigator.pop(context); // Cerrar el modal
                 },
               ),
               ListTile(
@@ -399,11 +400,8 @@ class ProfilePage extends StatelessWidget {
                   );
 
                   if (pickedFile != null) {
-                    // Aquí puedes guardar la imagen en tu modelo de usuario
-                    // o realizar cualquier otra operación necesaria
+                    sendPhoto(context, pickedFile);
                   }
-
-                  Navigator.pop(context); // Cerrar el modal
                 },
               ),
             ],
@@ -411,5 +409,48 @@ class ProfilePage extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> sendPhoto(context, photo) async {
+    if (true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Guardando foto...'),
+            duration: Duration(seconds: 4),
+            backgroundColor: Colors.green),
+      );
+
+      print("--------------------PHOTO------------------------");
+      print(photo);
+
+      Response response = await userService.addPhoto(context, photo);
+      dynamic res = response.data;
+
+      print(res);
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      if (res['error'] == null && res["message"] != "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registro exitoso!'),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context);
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return FailedModal(
+              title: 'Ha ocurrido un error',
+              description:
+                  "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+            );
+          },
+        );
+      }
+    }
   }
 }
