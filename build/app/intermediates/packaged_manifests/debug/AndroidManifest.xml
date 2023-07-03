@@ -23,8 +23,8 @@
         android:name="android.app.Application"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="jogo_mobile_app"
+        android:icon="@mipmap/launcher_icon"
+        android:label="Jogo"
         android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
