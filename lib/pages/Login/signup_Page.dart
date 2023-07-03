@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> {
                             title: Row(
                               children: [
                                 Text(
-                                  'I accepted',
+                                  'I accept',
                                   style: TextStyle(
                                     height: 1,
                                     color:
@@ -241,7 +241,8 @@ class _SignUpState extends State<SignUp> {
                                       context: context,
                                       builder: (BuildContext context) =>
                                           AlertDialog(
-                                        title: Text('Terms & Privacy Policy'),
+                                        title: Text(
+                                            'Términos y política de privacidad '),
                                         content: Text(
                                           'Here you can display the terms and privacy policy.',
                                         ),
@@ -256,7 +257,7 @@ class _SignUpState extends State<SignUp> {
                                     );
                                   },
                                   child: Text(
-                                    'Terms & Privacy Policy',
+                                    'Terms and policies',
                                     style: TextStyle(
                                       height: 1,
                                       color: Colors.green,
@@ -304,7 +305,7 @@ class _SignUpState extends State<SignUp> {
                               )
                             ]),
                         child: const Text(
-                          'Sign Up',
+                          'Registrarte',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w600),
                         ),
@@ -328,8 +329,11 @@ class _SignUpState extends State<SignUp> {
                             },
                             child: Text(
                               "Iniciar sesión",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.green),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.green,
+                                fontWeight: FontWeight.normal,
+                              ),
                             )),
                       ],
                     ),
