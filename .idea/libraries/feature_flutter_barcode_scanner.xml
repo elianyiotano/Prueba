@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="feature-flutter_barcode_scanner">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/flutter_barcode_scanner/intermediates/merged_java_res/release/feature-flutter_barcode_scanner.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

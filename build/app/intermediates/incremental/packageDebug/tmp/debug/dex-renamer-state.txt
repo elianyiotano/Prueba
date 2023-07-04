@@ -1,4 +1,7 @@
-#Sun Jun 25 10:04:23 CST 2023
-base.0=C\:\\Users\\Developer\\Desktop\\jogo-mobile-app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Tue Jul 04 08:48:03 AST 2023
+base.0=/Users/brandiotanoromero/Desktop/jogo-mobile-app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+base.1=/Users/brandiotanoromero/Desktop/jogo-mobile-app/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
 path.0=classes.dex
+path.1=classes2.dex
 renamed.0=classes.dex
+renamed.1=classes2.dex
