@@ -428,11 +428,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> sendPhoto(context, photo) async {
+    final newContext = Navigator.of(context, rootNavigator: true).context;
     if (isLoading != true) {
+      Navigator.pop(context);
       setState(() {
         isLoading = true;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(newContext).showSnackBar(
         const SnackBar(
           content: Text('Guardando foto...'),
           duration: Duration(seconds: 4),
@@ -441,15 +443,13 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
       try {
-        Response response = await userService.addPhoto(context, photo);
+        Response response = await userService.addPhoto(newContext, photo);
         dynamic res = response.data;
 
-        print(res);
-
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(newContext).hideCurrentSnackBar();
 
         if (res['error'] == null && res["message"] != "") {
-          ScaffoldMessenger.of(context).showSnackBar(
+          ScaffoldMessenger.of(newContext).showSnackBar(
             const SnackBar(
               content: Text('Registro exitoso!'),
               duration: Duration(seconds: 3),
@@ -460,15 +460,14 @@ class _ProfilePageState extends State<ProfilePage> {
           setState(() {
             isLoading = false;
           });
-          Navigator.pop(context);
-          AutoRouter.of(context).push(HomeRoute(user: user));
+          AutoRouter.of(newContext).push(HomeRoute(user: user));
         } else {
           setState(() {
             isLoading = false;
           });
           showDialog(
             context: context,
-            builder: (BuildContext context) {
+            builder: (BuildContext newContext) {
               return FailedModal(
                 title: 'Ha ocurrido un error',
                 description:
@@ -482,8 +481,8 @@ class _ProfilePageState extends State<ProfilePage> {
           isLoading = false;
         });
         showDialog(
-          context: context,
-          builder: (BuildContext context) {
+          context: newContext,
+          builder: (BuildContext newContext) {
             return FailedModal(
               title: 'Ha ocurrido un error',
               description:
