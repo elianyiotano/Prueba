@@ -1,21 +1,30 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/user.service.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:jogo_mobile_app/pages/ranking_page.dart';
-class ProfilePage extends StatelessWidget {
+import 'package:image_picker/image_picker.dart';
+import 'package:jogo_mobile_app/services/user.service.dart';
+
+class ProfilePage extends StatefulWidget {
   final User user;
 
   ProfilePage({required this.user});
 
+  @override
+  _ProfilePageState createState() => _ProfilePageState(user: user);
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final User user;
+  _ProfilePageState({required this.user});
+
   List<Activity> activities = [];
   bool isLoading = false;
+  UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +33,27 @@ class ProfilePage extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.grey,
+            ),
+            onSelected: (value) {
+              if (value == 'photo') {
+                _showChangeProfilePhotoModal(context);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'photo',
+                  child: Text('Editar foto'),
+                ),
+              ];
+            },
+          ),
+        ],
       ),
       body: isLoading
           ? Center(
@@ -51,7 +81,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                       image: DecorationImage(
-                        image: NetworkImage(user?.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
+                        image: NetworkImage(user?.profilePhotoUrl ??
+                            'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -69,7 +100,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Category: ${user!.category}',
+                  'Categoría: ${user!.category}',
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins',
@@ -91,7 +122,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Events',
+                          'Eventos',
                           style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Poppins',
@@ -116,7 +147,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Points',
+                          'Puntos',
                           style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Poppins',
@@ -140,7 +171,7 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       ListTile(
                         title: const Text(
-                          'My Points',
+                          'Mis Puntos',
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
@@ -238,7 +269,7 @@ class ProfilePage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      'Recent Activity',
+                      'Actividad Reciente',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Poppins',
@@ -249,10 +280,9 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 35),
-                
-              if (activities.length == 0) ...[
-                Text("No hay actividades registradas")
-              ],
+                if (activities.length == 0) ...[
+                  Text("No hay actividades registradas")
+                ],
                 Expanded(
                   child: ListView.separated(
                     itemCount: activities.length,
@@ -328,46 +358,133 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  // Future<void> getProfile(BuildContext context) async {
-  //   setState(() {
-  //           isLoading = false;
-  //         });
-    
-    // try {
-    //   Response response = await UserService().getUserProfileData(context);
-    //   dynamic res = response.data;
-    //   print(res);
-    //   if (res['ErrorCode'] == null && res["success"] != "") {
-    //     user = User.fromJson(res['profile']);
-    //     activities.clear();
-    //     res['activity'].forEach((value) {
-    //       activities.add(Activity.fromJson(value));
-    //     });
-    //     if (mounted) {
-    //       setState(() {
-    //         isLoading = false;
-    //       });
-    //     }
-    //   } else {
-    //     ScaffoldMessenger.of(context).clearSnackBars();
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text('${res['message']}'),
-    //         duration: const Duration(seconds: 4),
-    //         backgroundColor: Colors.red,
-    //       ),
-    //     );
-    //   }
-    // } catch (error) {
-    //   print(error.toString());
-    //   ScaffoldMessenger.of(context).clearSnackBars();
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: const Text('An error occurred.'),
-    //       duration: const Duration(seconds: 4),
-    //       backgroundColor: Colors.red,
-    //     ),
-    //   );
-    // }
-  // }
+  void _showChangeProfilePhotoModal(BuildContext context) async {
+    final picker = ImagePicker();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Cambiar Foto de Perfil',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16),
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text('Tomar foto'),
+                onTap: () async {
+                  final pickedFile = await picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+
+                  if (pickedFile != null) {
+                    sendPhoto(context, pickedFile);
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.image),
+                title: Text('Seleccionar de la galería'),
+                onTap: () async {
+                  final pickedFile = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+
+                  if (pickedFile != null) {
+                    sendPhoto(context, pickedFile);
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> sendPhoto(context, photo) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    if (true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Guardando foto...'),
+          duration: Duration(seconds: 4),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      try {
+        Response response = await userService.addPhoto(context, photo);
+        dynamic res = response.data;
+
+        print(res);
+
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+        if (res['error'] == null && res["message"] != "") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registro exitoso!'),
+              duration: Duration(seconds: 3),
+              backgroundColor: Colors.green,
+            ),
+          );
+          user.profilePhotoUrl = res['profile_photo_url'];
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.pop(context);
+          AutoRouter.of(context).push(ProfileRoute(user: user));
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return FailedModal(
+                title: 'Ha ocurrido un error',
+                description:
+                    "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+              );
+            },
+          );
+        }
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+        });
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return FailedModal(
+              title: 'Ha ocurrido un error',
+              description:
+                  "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+            );
+          },
+        );
+      }
+    }
+  }
 }

@@ -1,10 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/user.dart';
-import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/coupons.service.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 
 class RankingPage extends StatefulWidget {
   @override
@@ -14,7 +12,6 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   final List<User> users = [];
   bool isLoading = true;
-  
 
   @override
   void initState() {
@@ -32,13 +29,13 @@ class _RankingPageState extends State<RankingPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Color.fromARGB(255, 3, 19, 123),
+          color: Colors.green,
         ),
         title: const Row(
           children: [
             Expanded(
               child: Text(
-                'Ranking',
+                'Clasificación',
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -52,11 +49,19 @@ class _RankingPageState extends State<RankingPage> {
       ),
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (users.length == 0) ...[
+                  Text(
+                    "No hay un ranking disponible",
+                    textAlign: TextAlign.center,
+                  )
+                ],
                 Expanded(
                   child: ListView.separated(
                     itemCount: users.length,
@@ -68,12 +73,14 @@ class _RankingPageState extends State<RankingPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '${index+1}.',
+                              '${index + 1}.',
                               style: TextStyle(color: Colors.black),
                             ),
                             SizedBox(width: 8),
                             CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePhotoUrl ?? 'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
+                              backgroundImage: NetworkImage(user
+                                      .profilePhotoUrl ??
+                                  'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                             ),
                           ],
                         ),
@@ -88,35 +95,35 @@ class _RankingPageState extends State<RankingPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 4),
-                            Text(
-                              '${user.points ?? ''} Pts',
-                              style: TextStyle(color: Colors.black),
-                            ),
+                            // Text(
+                            //   '${user.points ?? ''} Pts',
+                            //   style: TextStyle(color: Colors.black),
+                            // ),
                           ],
                         ),
-                        trailing: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SizedBox(height: 4),
-                            Text(
-                              'Tipo',
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .fontSize,
-                                color: Color.fromARGB(255, 57, 56, 56),
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              user.category ?? '',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // trailing: Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   children: [
+                        //     SizedBox(height: 4),
+                            // Text(
+                            //   'Tipo',
+                            //   style: TextStyle(
+                            //     fontSize: Theme.of(context)
+                            //         .textTheme
+                            //         .subtitle1!
+                            //         .fontSize,
+                            //     color: Color.fromARGB(255, 57, 56, 56),
+                            //   ),
+                            // ),
+                            // SizedBox(height: 4),
+                            // Text(
+                            //   user.category ?? '',
+                            //   style: TextStyle(
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
+                          // ],
+                        // ),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       );
@@ -134,8 +141,8 @@ class _RankingPageState extends State<RankingPage> {
     if (true) {
       Response response = await UserService().ranking(context);
       dynamic res = response.data;
-      print(res);
-      if (res != "") {
+     
+      if (res is List) {
         users.clear();
         res.forEach((value) {
           users.add(User.fromJson(value));
@@ -146,14 +153,18 @@ class _RankingPageState extends State<RankingPage> {
           });
         }
       } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${res['error']}'),
-            duration: Duration(seconds: 4),
-            backgroundColor: Colors.red,
-          ),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return FailedModal(
+              title: 'Ha ocurrido un error',
+              description: '${res['error']}',
+            );
+          },
         );
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }

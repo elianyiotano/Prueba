@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/coupon.dart';
+import 'package:intl/intl.dart';
 
 class DetailPage extends StatelessWidget {
   final Coupon coupon;
@@ -18,7 +19,7 @@ class DetailPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Color.fromARGB(255, 3, 19, 123),
+          color: Colors.green,
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -26,28 +27,23 @@ class DetailPage extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            // CarouselSlider(
-            //   options: CarouselOptions(),
-            //   items: event.images?.map((item) {
-            //     return Container(
-            //       child: Center(
-            //         child: Image.network(
-            //           item,
-            //           fit: BoxFit.cover,
-            //           width: 1000,
-            //         ),
-            //       ),
-            //     );
-            //   }).toList() ?? [],
-            // ),
-            Container(
-              child: Center(
-                child: Image.network(
-                  coupon.image ?? '',
-                  fit: BoxFit.cover,
-                  width: 1000,
-                ),
-              ),
+            FutureBuilder<void>(
+              future: _preloadImage(context),
+              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Failed to load image');
+                } else {
+                  return Image.network(
+                    coupon.image ?? '',
+                    fit: BoxFit.cover,
+                    width: 1000,
+                  );
+                }
+              },
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
@@ -74,7 +70,8 @@ class DetailPage extends StatelessWidget {
                           horizontal: 8,
                         ),
                         child: Text(
-                          "${coupon.validFrom!}-${coupon.validUntil}" ?? '',
+                          "${_formatDate(coupon.validFrom)} - ${_formatDate(coupon.validUntil)}" ??
+                              '',
                           style: TextStyle(
                             color: const Color(0xFF0F511D),
                           ),
@@ -120,5 +117,19 @@ class DetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _preloadImage(context) async {
+    if (coupon.image != null) {
+      await precacheImage(NetworkImage(coupon.image!), context);
+    }
+  }
+
+  String _formatDate(String? date) {
+    if (date != null) {
+      final dateTime = DateTime.parse(date);
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    }
+    return '';
   }
 }

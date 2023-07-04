@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, file_names
-
 import 'package:flutter/material.dart';
 
 class ButtonSignUp extends StatelessWidget {

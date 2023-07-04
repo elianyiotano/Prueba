@@ -44,104 +44,64 @@ class _SignInState extends State<SignIn> {
                     height: 200,
                     width: 200,
                   ),
-                  TabNavigation(),
-                  const SizedBox(height: 30),
-                  // EmailInput
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: "Correo electrónico",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                ),
+
+                const SizedBox(height: 15),
+
+                // EmailInput
+                TextFormGlobal(
+                  controller: emailController,
+                  text: 'Email',
+                  obscure: false,
+                  textInputType: TextInputType.emailAddress,
+                ),
+
+                const SizedBox(height: 10),
+
+                // PasswordInput
+                PasswordTextForm(
+                  controller: passwordController,
+                  text: 'Password',
+                  textInputType: TextInputType.text,
+                  onVisibilityChanged: (bool obscure) {},
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPassword()),
+                    );
+                  },
+                  child: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Forgot password?",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    validator: (value) {
-                      bool emailValid = RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[A-zA-Z0-9]+\.[a-zA-Z]+")
-                          .hasMatch(value!);
-                      if (value.isEmpty) {
-                        return "Campo requerido.";
-                      } else if (!emailValid) {
-                        return "Ingrese un correo valido";
-                      }
-                    },
                   ),
-                  const SizedBox(height: 20),
-                  // PasswordInput
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: passwordController,
-                    obscureText: passToggle,
-                    decoration: InputDecoration(
-                        labelText: "Contraseña",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        suffix: InkWell(
-                          onTap: () {
-                            setState(() {
-                              passToggle = !passToggle;
-                            });
-                          },
-                          child: Icon(
-                            passToggle
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            size: 18,
-                          ),
-                        )),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Campo requerido.";
-                      } else if (passwordController.text.length < 6) {
-                        return "Su contraseña debe contener un mínimo 6 caracteres";
-                      }
-                    },
-                  ),
-                  TextButton(
+                ),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotPassword()),
-                      );
+                      loginUsers(context);
                     },
-                    child: const Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "Forgot password?",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                      padding: const EdgeInsets.all(16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  InkWell(
-                    onTap: () {
-                      if (_formfield.currentState!.validate()) {
-                        loginUsers(context);
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(49, 220, 118, 1.0),
-                          borderRadius: BorderRadius.circular(6),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                            )
-                          ]),
-                      child: const Text(
-                        'Iniciar sesión',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w600),
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -170,6 +130,7 @@ class _SignInState extends State<SignIn> {
         passwordController.text,
       );
       dynamic res = response.data;
+
       if (mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
       }
@@ -188,14 +149,12 @@ class _SignInState extends State<SignIn> {
         }
       } else {
         dynamic errors = res['error'];
-        String castedErrors = errors.toString();
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return const FailedModal(
+            return FailedModal(
               title: 'Error de inicio de sesión',
-              description:
-                  'Usuario o contraseña incorrecta. Por favor, ingrese su usuario y contraseña correcto.',
+              description: errors,
             );
           },
         );

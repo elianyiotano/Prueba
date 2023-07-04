@@ -119,7 +119,7 @@ class _ForgotPassword extends State<ForgotPassword> {
   }
 
   Future<void> sendForgotPasswordEmail(context) async {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Enviando correo de recuperación de contraseña...'),
       backgroundColor: Colors.green,
     ));
@@ -131,7 +131,7 @@ class _ForgotPassword extends State<ForgotPassword> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
 
-    if (res["success"] != "") {
+    if (res['error'] == null && res["message"] != "") {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -142,20 +142,17 @@ class _ForgotPassword extends State<ForgotPassword> {
           );
         },
       );
-
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => SignIn()),
       );
     } else {
-      List<dynamic> errors = res['errors'];
-      List<String> castedErrors = errors.cast<String>();
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return FailedModal(
-            title: 'Error en el envío',
-            description: castedErrors.join('\n'),
+            title: 'Error en el envío del correo ',
+            description: res['error'],
           );
         },
       );

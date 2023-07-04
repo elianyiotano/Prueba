@@ -33,7 +33,6 @@ class _HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Obtener el selected menu opt
     final uiProviders = Provider.of<UiProviders>(context);
     final currentIndex = uiProviders.selectedMenuOpt;
 

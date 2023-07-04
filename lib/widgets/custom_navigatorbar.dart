@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/providers/ui_providers.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +24,7 @@ class CustomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
-          label: 'Eventos',
+          label: 'Cupones',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications_active_outlined),

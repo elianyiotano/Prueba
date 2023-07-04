@@ -8,7 +8,6 @@ class RouteGuard extends AutoRouteGuard {
   RouteGuard(this.authService) {
     authService.addListener(() {
       if (!authService.authenticated) {
-        // reevaluate();
       }
     });
   }
@@ -17,15 +16,6 @@ class RouteGuard extends AutoRouteGuard {
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     if (authService.authenticated) return resolver.next();
 
-    router.push(SignInRoute());    
-
-    // router.push(
-    //   LoginRoute(
-    //     onLoginCallback: (_) {
-    //       router.removeLast();
-    //       router.replace(HomeRoute());
-    //     },
-    //   ),
-    // );
+    router.push(const SignInRoute());    
   }
 }
