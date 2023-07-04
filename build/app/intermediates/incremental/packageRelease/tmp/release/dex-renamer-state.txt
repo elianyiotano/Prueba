@@ -1,0 +1,4 @@
+#Tue Jul 04 08:26:24 AST 2023
+base.0=/Users/brandiotanoromero/Desktop/jogo-mobile-app/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
