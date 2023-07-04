@@ -117,7 +117,7 @@ class _NotificationPageState extends State<NotificationPage> {
         builder: (BuildContext context) {
           return FailedModal(
             title: 'Ha ocurrido un error',
-            description: '${res['error']}',
+            description: "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
           );
         },
       );

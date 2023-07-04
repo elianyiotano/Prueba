@@ -199,7 +199,7 @@ class _CouponsPageState extends State<CouponsPage> {
           builder: (BuildContext context) {
             return FailedModal(
               title: 'Ha ocurrido un error',
-              description: '${res['error']}',
+              description: "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
             );
           },
         );

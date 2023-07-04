@@ -35,7 +35,7 @@ class DetailPage extends StatelessWidget {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                   );
                 } else if (snapshot.hasError) {
-                  return Text('Failed to load image');
+                  return Text('Fallo al cargar la imagen');
                 } else {
                   return Image.network(
                     coupon.image ?? '',

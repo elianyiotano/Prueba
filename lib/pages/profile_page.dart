@@ -371,58 +371,58 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       builder: (BuildContext context) {
         return isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-              ),
-            )
-          : Container(
-          padding: EdgeInsets.all(16),
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.6,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Cambiar Foto de Perfil',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 16),
-              ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('Tomar foto'),
-                onTap: () async {
-                  final pickedFile = await picker.pickImage(
-                    source: ImageSource.camera,
-                  );
+              )
+            : Container(
+                padding: EdgeInsets.all(16),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.6,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Cambiar Foto de Perfil',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 16),
+                    ListTile(
+                      leading: Icon(Icons.camera),
+                      title: Text('Tomar foto'),
+                      onTap: () async {
+                        final pickedFile = await picker.pickImage(
+                          source: ImageSource.camera,
+                        );
 
-                  if (pickedFile != null) {
-                    sendPhoto(context, pickedFile);
-                  }
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.image),
-                title: Text('Seleccionar de la galería'),
-                onTap: () async {
-                  final pickedFile = await picker.pickImage(
-                    source: ImageSource.gallery,
-                  );
+                        if (pickedFile != null) {
+                          sendPhoto(context, pickedFile);
+                        }
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.image),
+                      title: Text('Seleccionar de la galería'),
+                      onTap: () async {
+                        final pickedFile = await picker.pickImage(
+                          source: ImageSource.gallery,
+                        );
 
-                  if (pickedFile != null) {
-                    sendPhoto(context, pickedFile);
-                  }
-                },
-              ),
-            ],
-          ),
-        );
+                        if (pickedFile != null) {
+                          sendPhoto(context, pickedFile);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              );
       },
     );
   }
@@ -472,7 +472,7 @@ class _ProfilePageState extends State<ProfilePage> {
               return FailedModal(
                 title: 'Ha ocurrido un error',
                 description:
-                    "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+                    "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
               );
             },
           );
@@ -487,7 +487,7 @@ class _ProfilePageState extends State<ProfilePage> {
             return FailedModal(
               title: 'Ha ocurrido un error',
               description:
-                  "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+                  "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
             );
           },
         );

@@ -359,7 +359,8 @@ class _SignUpState extends State<SignUp> {
             builder: (BuildContext context) {
               return FailedModal(
                 title: 'Error en el envío',
-                description: res["error"],
+                description:
+                    "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. Vuelva a intentar. ",
               );
             },
           );

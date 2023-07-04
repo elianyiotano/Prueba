@@ -152,7 +152,7 @@ class _ForgotPassword extends State<ForgotPassword> {
         builder: (BuildContext context) {
           return FailedModal(
             title: 'Error en el envío del correo ',
-            description: res['error'],
+            description: 'Por favor verique su conexión a internet y que el correo proporcionado sea el correcto. Vuelva a intentarlo de nuevo. ',
           );
         },
       );
