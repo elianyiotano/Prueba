@@ -370,7 +370,13 @@ class _ProfilePageState extends State<ProfilePage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (BuildContext context) {
-        return Container(
+        return isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
+            )
+          : Container(
           padding: EdgeInsets.all(16),
           constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height * 0.6,
@@ -422,11 +428,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> sendPhoto(context, photo) async {
-    setState(() {
-      isLoading = true;
-    });
-
-    if (true) {
+    if (isLoading != true) {
+      setState(() {
+        isLoading = true;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Guardando foto...'),
@@ -456,7 +461,7 @@ class _ProfilePageState extends State<ProfilePage> {
             isLoading = false;
           });
           Navigator.pop(context);
-          AutoRouter.of(context).push(ProfileRoute(user: user));
+          AutoRouter.of(context).push(HomeRoute(user: user));
         } else {
           setState(() {
             isLoading = false;
