@@ -12,10 +12,11 @@ class SocialLogin extends StatelessWidget {
           alignment: Alignment.center,
           child: const Text(
             'O inicia sesión con',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w400, fontSize: 16),
           ),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 30),
         Row(
           children: [
             Expanded(

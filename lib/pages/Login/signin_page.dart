@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, sort_child_properties_last, prefer_const_constructors
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,7 @@ import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:jogo_mobile_app/widgets/social.login.dart';
-import 'package:jogo_mobile_app/widgets/text.form.global.dart';
+import 'package:jogo_mobile_app/widgets/tab_navigation.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -17,6 +19,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final _formfield = GlobalKey<FormState>();
+  bool passToggle = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   UserService userService = UserService();
@@ -29,29 +33,35 @@ class _SignInState extends State<SignIn> {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 169,
-                    width: 300,
+            child: Form(
+              key: _formfield,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/JOGO.png',
+                    height: 200,
+                    width: 200,
                   ),
                 ),
+
                 const SizedBox(height: 15),
+
+                // EmailInput
                 TextFormGlobal(
                   controller: emailController,
-                  text: 'Correo Electrónico',
+                  text: 'Email',
                   obscure: false,
                   textInputType: TextInputType.emailAddress,
                 ),
+
                 const SizedBox(height: 10),
+
+                // PasswordInput
                 PasswordTextForm(
                   controller: passwordController,
-                  text: 'Contraseña',
+                  text: 'Password',
                   textInputType: TextInputType.text,
                   onVisibilityChanged: (bool obscure) {},
                 ),
@@ -65,7 +75,7 @@ class _SignInState extends State<SignIn> {
                   child: const Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "Has olvidado la contraseña?",
+                      "Forgot password?",
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
@@ -88,42 +98,18 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     child: const Text(
-                      'Iniciar Sesión',
+                      'Sign In',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 25),
-                SocialLogin(),
-              ],
-            ),
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        height: 50,
-        color: Colors.white,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('¿No tienes una cuenta?'),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp()));
-              },
-              child: const Text(
-                "Regístrate",
-                style: TextStyle(
-                  color: Color.fromRGBO(49, 220, 118, 1.0),
-                ),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -174,68 +160,5 @@ class _SignInState extends State<SignIn> {
         );
       }
     }
-  }
-}
-
-class PasswordTextForm extends StatefulWidget {
-  final TextEditingController controller;
-  final String text;
-  final TextInputType textInputType;
-  final ValueChanged<bool> onVisibilityChanged;
-
-  const PasswordTextForm({
-    required this.controller,
-    required this.text,
-    required this.textInputType,
-    required this.onVisibilityChanged,
-  });
-
-  @override
-  _PasswordTextFormState createState() => _PasswordTextFormState();
-}
-
-class _PasswordTextFormState extends State<PasswordTextForm> {
-  bool obscure = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      padding: const EdgeInsets.only(top: 3, left: 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(6),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 1),
-        ],
-      ),
-      child: TextFormField(
-        controller: widget.controller,
-        keyboardType: widget.textInputType,
-        obscureText: obscure,
-        style: const TextStyle(fontSize: 16),
-        decoration: InputDecoration(
-          hintText: widget.text,
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.only(top: 15),
-          hintStyle: const TextStyle(
-            fontSize: 16,
-            height: 1,
-          ),
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                obscure = !obscure;
-              });
-              widget.onVisibilityChanged(obscure);
-            },
-            icon: Icon(
-              obscure ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

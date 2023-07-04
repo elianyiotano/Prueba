@@ -37,8 +37,9 @@ class User {
   String? phoneNumber;
   String? email;
   String? category;
+  String? referralCode;
   int? points;
-  
+
   User(
       {this.id,
       this.firstName,
@@ -47,7 +48,8 @@ class User {
       this.profilePhotoUrl,
       this.phoneNumber,
       this.email,
-      this.category, 
+      this.category,
+      this.referralCode,
       this.points});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -59,6 +61,7 @@ class User {
     phoneNumber = json['phone_number'];
     email = json['email'];
     category = json['category'];
+    referralCode = json['referral_code'];
     points = json['points'];
   }
 
@@ -72,6 +75,7 @@ class User {
     data['phone_number'] = this.phoneNumber;
     data['email'] = this.email;
     data['category'] = this.category;
+    data['referral_code'] = this.referralCode;
     data['points'] = this.points;
     return data;
   }
