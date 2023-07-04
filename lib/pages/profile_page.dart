@@ -57,7 +57,9 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.center,
