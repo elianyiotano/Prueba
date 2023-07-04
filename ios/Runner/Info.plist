@@ -4,6 +4,8 @@
 <dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for barcode scanning.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Se requiere acceso a la galería de fotos para seleccionar una imagen.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
