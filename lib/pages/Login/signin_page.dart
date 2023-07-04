@@ -41,18 +41,14 @@ class _SignInState extends State<SignIn> {
                     width: 300,
                   ),
                 ),
-
                 const SizedBox(height: 15),
-
                 TextFormGlobal(
                   controller: emailController,
                   text: 'Correo Electrónico',
                   obscure: false,
                   textInputType: TextInputType.emailAddress,
                 ),
-
                 const SizedBox(height: 10),
-
                 PasswordTextForm(
                   controller: passwordController,
                   text: 'Contraseña',
@@ -148,6 +144,7 @@ class _SignInState extends State<SignIn> {
         passwordController.text,
       );
       dynamic res = response.data;
+
       if (mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
       }
@@ -161,7 +158,7 @@ class _SignInState extends State<SignIn> {
 
           MyApp.of(context).userData = UserData.fromJson(res);
           User user = User.fromJson(res["user"]);
-          
+
           AutoRouter.of(context).replace(HomeRoute(user: user));
         }
       } else {

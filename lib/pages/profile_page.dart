@@ -9,10 +9,18 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   final User user;
 
   ProfilePage({required this.user});
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState(user: user);
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final User user;
+  _ProfilePageState({required this.user});
 
   List<Activity> activities = [];
   bool isLoading = false;
@@ -412,34 +420,60 @@ class ProfilePage extends StatelessWidget {
   }
 
   Future<void> sendPhoto(context, photo) async {
+    setState(() {
+      isLoading = true;
+    });
+
     if (true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Guardando foto...'),
-            duration: Duration(seconds: 4),
-            backgroundColor: Colors.green),
+          content: Text('Guardando foto...'),
+          duration: Duration(seconds: 4),
+          backgroundColor: Colors.green,
+        ),
       );
 
-      print("--------------------PHOTO------------------------");
-      print(photo);
+      try {
+        Response response = await userService.addPhoto(context, photo);
+        dynamic res = response.data;
 
-      Response response = await userService.addPhoto(context, photo);
-      dynamic res = response.data;
+        print(res);
 
-      print(res);
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-      if (res['error'] == null && res["message"] != "") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Registro exitoso!'),
-            duration: Duration(seconds: 3),
-            backgroundColor: Colors.green,
-          ),
-        );
-        Navigator.pop(context);
-      } else {
+        if (res['error'] == null && res["message"] != "") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registro exitoso!'),
+              duration: Duration(seconds: 3),
+              backgroundColor: Colors.green,
+            ),
+          );
+          user.profilePhotoUrl = res['profile_photo_url'];
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.pop(context);
+          AutoRouter.of(context).push(ProfileRoute(user: user));
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return FailedModal(
+                title: 'Ha ocurrido un error',
+                description:
+                    "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. ",
+              );
+            },
+          );
+        }
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+        });
         showDialog(
           context: context,
           builder: (BuildContext context) {
