@@ -466,7 +466,7 @@ class _ProfilePageState extends State<ProfilePage> {
             isLoading = false;
           });
           showDialog(
-            context: context,
+            context: newContext,
             builder: (BuildContext newContext) {
               return FailedModal(
                 title: 'Ha ocurrido un error',
