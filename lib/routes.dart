@@ -18,7 +18,6 @@ import 'package:jogo_mobile_app/routes.guard.dart';
     ),
     AutoRoute(
       page: SignUp,
-      initial: true,
       name: 'SignUpRoute',
       path: '/signup',
     ),

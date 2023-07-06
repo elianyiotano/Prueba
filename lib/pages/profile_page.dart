@@ -1,29 +1,30 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
-import 'package:jogo_mobile_app/services/user.service.dart';
+import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:jogo_mobile_app/pages/ranking_page.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:jogo_mobile_app/services/user.service.dart';
 
 class ProfilePage extends StatefulWidget {
+  final User user;
+
+  ProfilePage({required this.user});
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(user: user);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  User? user;
-  List<Activity> activities = [];
-  bool isLoading = true;
+  final User user;
+  _ProfilePageState({required this.user});
 
-  @override
-  void initState() {
-    super.initState();
-    getProfile(context);
-  }
+  List<Activity> activities = [];
+  bool isLoading = false;
+  UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +33,33 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.grey,
+            ),
+            onSelected: (value) {
+              if (value == 'photo') {
+                _showChangeProfilePhotoModal(context);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'photo',
+                  child: Text('Editar foto'),
+                ),
+              ];
+            },
+          ),
+        ],
       ),
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,7 +83,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                       image: DecorationImage(
-                        image: NetworkImage(user?.photo ?? ''),
+                        image: NetworkImage(user?.profilePhotoUrl ??
+                            'https://pimedelaar.org/wp-content/uploads/2023/05/no-image.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -67,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  user?.name ?? '',
+                  "${user?.firstName} ${user?.lastName1}" ?? '',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -77,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  'Category: ${user!.category}',
+                  'Categoría: ${user!.category}',
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins',
@@ -91,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       children: [
                         Text(
-                          user?.events.toString() ?? '',
+                          '0',
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Poppins',
@@ -99,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         Text(
-                          'Events',
+                          'Eventos',
                           style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Poppins',
@@ -124,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         Text(
-                          'Points',
+                          'Puntos',
                           style: TextStyle(
                             fontSize: 15,
                             fontFamily: 'Poppins',
@@ -148,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       ListTile(
                         title: const Text(
-                          'My Points',
+                          'Mis Puntos',
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Poppins',
@@ -246,7 +271,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      'Recent Activity',
+                      'Actividad Reciente',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Poppins',
@@ -256,7 +281,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 35),
+                if (activities.length == 0) ...[
+                  Text("No hay actividades registradas")
+                ],
                 Expanded(
                   child: ListView.separated(
                     itemCount: activities.length,
@@ -332,42 +360,137 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> getProfile(BuildContext context) async {
-    try {
-      Response response = await UserService().getUserProfileData(context);
-      dynamic res = response.data;
-      print(res);
-      if (res['ErrorCode'] == null && res["success"] != "") {
-        user = User.fromJson(res['profile']);
-        activities.clear();
-        res['activity'].forEach((value) {
-          activities.add(Activity.fromJson(value));
-        });
-        if (mounted) {
+  void _showChangeProfilePhotoModal(BuildContext context) async {
+    final picker = ImagePicker();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                ),
+              )
+            : Container(
+                padding: EdgeInsets.all(16),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.6,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Cambiar Foto de Perfil',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 16),
+                    ListTile(
+                      leading: Icon(Icons.camera),
+                      title: Text('Tomar foto'),
+                      onTap: () async {
+                        final pickedFile = await picker.pickImage(
+                          source: ImageSource.camera,
+                        );
+
+                        if (pickedFile != null) {
+                          sendPhoto(context, pickedFile);
+                        }
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.image),
+                      title: Text('Seleccionar de la galería'),
+                      onTap: () async {
+                        final pickedFile = await picker.pickImage(
+                          source: ImageSource.gallery,
+                        );
+
+                        if (pickedFile != null) {
+                          sendPhoto(context, pickedFile);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              );
+      },
+    );
+  }
+
+  Future<void> sendPhoto(context, photo) async {
+    final newContext = Navigator.of(context, rootNavigator: true).context;
+    if (isLoading != true) {
+      Navigator.pop(context);
+      setState(() {
+        isLoading = true;
+      });
+      ScaffoldMessenger.of(newContext).showSnackBar(
+        const SnackBar(
+          content: Text('Guardando foto...'),
+          duration: Duration(seconds: 4),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      try {
+        Response response = await userService.addPhoto(newContext, photo);
+        dynamic res = response.data;
+
+        ScaffoldMessenger.of(newContext).hideCurrentSnackBar();
+
+        if (res['error'] == null && res["message"] != "") {
+          ScaffoldMessenger.of(newContext).showSnackBar(
+            const SnackBar(
+              content: Text('Registro exitoso!'),
+              duration: Duration(seconds: 3),
+              backgroundColor: Colors.green,
+            ),
+          );
+          user.profilePhotoUrl = res['profile_photo_url'];
           setState(() {
             isLoading = false;
           });
+          AutoRouter.of(newContext).push(HomeRoute(user: user));
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+          showDialog(
+            context: newContext,
+            builder: (BuildContext newContext) {
+              return FailedModal(
+                title: 'Ha ocurrido un error',
+                description:
+                    "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
+              );
+            },
+          );
         }
-      } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${res['message']}'),
-            duration: const Duration(seconds: 4),
-            backgroundColor: Colors.red,
-          ),
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+        });
+        showDialog(
+          context: newContext,
+          builder: (BuildContext newContext) {
+            return FailedModal(
+              title: 'Ha ocurrido un error',
+              description:
+                  "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
+            );
+          },
         );
       }
-    } catch (error) {
-      print(error.toString());
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('An error occurred.'),
-          duration: const Duration(seconds: 4),
-          backgroundColor: Colors.red,
-        ),
-      );
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../pages/home_page.dart';
 
 class SuccessModal extends StatelessWidget {
   final String title;

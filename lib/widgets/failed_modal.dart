@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../pages/home_page.dart';
 
 class FailedModal extends StatelessWidget {
   final String title;
   final String description;
 
-  const FailedModal({Key? key, required this.title, required this.description})
+  FailedModal({Key? key, required this.title, required this.description})
       : super(key: key);
 
   @override
