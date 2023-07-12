@@ -42,20 +42,20 @@ functionalities and navigation through the user interface.
 
 It is recommended to run the project from the terminal. That is because it allows you to detect memory leaks or render problems more easily without crash your VSCode
 
-`flutter run --no-sound-null-safety`
+`flutter run`
 
 # Build the application
 ## Android
 
-1. `flutter build apk --no-sound-null-safety`
+1. `flutter build apk`
 2. Connect your device in developer mode
 3. `flutter install`
 4. Select your device from the available devices
 
 ## IOS
 
-1. `flutter build ipa --no-sound-null-safety`
-2. `flutter build ios --no-sound-null-safety`
+1. `flutter build ipa`
+2. `flutter build ios`
 3. `flutter install`
 
 # Backend configuration
