@@ -226,7 +226,7 @@ class _SignUpState extends State<SignUp> {
                             title: Row(
                               children: [
                                 Text(
-                                  'I accept',
+                                  'Acepto',
                                   style: TextStyle(
                                     height: 1,
                                     color:
@@ -257,8 +257,8 @@ class _SignUpState extends State<SignUp> {
                                       ),
                                     );
                                   },
-                                  child: Text(
-                                    'Terms and policies',
+                                  child: const Text(
+                                    'los términos y políticas.',
                                     style: TextStyle(
                                       height: 1,
                                       color: Colors.green,
