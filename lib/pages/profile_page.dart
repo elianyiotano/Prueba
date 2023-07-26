@@ -3,6 +3,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
@@ -24,12 +25,12 @@ class _ProfilePageState extends State<ProfilePage> {
   final User user;
   _ProfilePageState({required this.user});
 
-  List<Activity> activities = [];
   bool isLoading = false;
   UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
+    List<Activity>? activities = MyApp.of(context).userData.activities;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -45,12 +46,27 @@ class _ProfilePageState extends State<ProfilePage> {
               if (value == 'photo') {
                 _showChangeProfilePhotoModal(context);
               }
+              if (value == 'logout') {
+                print("-------------------------------------------------");
+                print(MyApp.of(context).userData.user?.firstName);
+                print(MyApp.of(context).userData.activities?.length);
+                // var authService = MyApp.of(context).authService;
+                // authService.authenticated = false;
+                // authService.email = '';
+                // authService.token_auth == '';
+
+                // AutoRouter.of(context).replace(SignInRoute());
+              }
             },
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem<String>(
                   value: 'photo',
-                  child: Text('Editar foto'),
+                  child: Text('Editar Foto'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Text('Cerrar Sesión'),
                 ),
               ];
             },
@@ -183,11 +199,21 @@ class _ProfilePageState extends State<ProfilePage> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.more_horiz),
+                        trailing: TextButton.icon(
                           onPressed: () {
                             AutoRouter.of(context).push(RankingRoute());
                           },
+                          icon: Icon(
+                            Icons.more_horiz,
+                            size: 24.0,
+                            color: Color.fromRGBO(49, 220, 118, 1.0),
+                          ),
+                          label: Text(
+                            'Ver Ranking',
+                            style: TextStyle(
+                              color:  Color.fromRGBO(49, 220, 118, 1.0),
+                            ),
+                          ),
                         ),
                       ),
                       Container(
@@ -283,13 +309,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 35),
-                if (activities.length == 0) ...[
+                const SizedBox(height: 10),
+                if (activities?.length == 0) ...[
                   Text("No hay actividades registradas")
                 ],
                 Expanded(
                   child: ListView.separated(
-                    itemCount: activities.length,
+                    itemCount: activities!.length,
                     separatorBuilder: (context, index) => Divider(
                       color: Colors.grey,
                       thickness: 1,
