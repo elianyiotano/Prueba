@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/main.dart';
+import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
+import 'package:jogo_mobile_app/routes.gr.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
 import 'package:jogo_mobile_app/widgets/tab_navigation_sign_Up.dart';
 
@@ -483,13 +487,20 @@ class _SignUpState extends State<SignUp> {
       if (res['error'] == null && res["token"] != "") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Registro exitoso! Inicia sesión...'),
-            duration: Duration(seconds: 5),
+            content: Text('Registro exitoso! Iniciando sesión...'),
+            duration: Duration(seconds: 3),
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+        var authService = MyApp.of(context).authService;
+          authService.authenticated = true;
+          authService.email = emailController.text;
+          authService.token_auth = res["token"] ?? "";
+
+          MyApp.of(context).userData = UserData.fromJson(res);
+          User user = User.fromJson(res["user"]);
+
+          AutoRouter.of(context).replace(HomeRoute(user: user));
       } else {
         if (res["error"] != "") {
           showDialog(
