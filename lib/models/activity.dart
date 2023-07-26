@@ -1,30 +1,26 @@
 class Activity {
-  int? id;
   String? name;
   String? image;
   String? date;
   int? points;
 
   Activity(
-      {this.id,
-      this.name,
+      {this.name,
       this.image,
       this.date,
       this.points,});
 
   Activity.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     name = json['name'];
-    image = json['image'];
+    image = json['image_url'];
     date = json['date'];
     points = json['points'];;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['name'] = this.name;
-    data['image'] = this.image;
+    data['image_url'] = this.image;
     data['date'] = this.date;
     data['points'] = this.points;
     return data;

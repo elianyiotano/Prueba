@@ -25,12 +25,12 @@ class _ProfilePageState extends State<ProfilePage> {
   final User user;
   _ProfilePageState({required this.user});
 
-  List<Activity> activities = [];
   bool isLoading = false;
   UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
+    List<Activity>? activities = MyApp.of(context).userData.activities;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -47,12 +47,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 _showChangeProfilePhotoModal(context);
               }
               if (value == 'logout') {
-                var authService = MyApp.of(context).authService;
-                authService.authenticated = false;
-                authService.email = '';
-                authService.token_auth == '';
+                print("-------------------------------------------------");
+                print(MyApp.of(context).userData.user?.firstName);
+                print(MyApp.of(context).userData.activities?.length);
+                // var authService = MyApp.of(context).authService;
+                // authService.authenticated = false;
+                // authService.email = '';
+                // authService.token_auth == '';
 
-                AutoRouter.of(context).replace(SignInRoute());
+                // AutoRouter.of(context).replace(SignInRoute());
               }
             },
             itemBuilder: (BuildContext context) {
@@ -196,11 +199,21 @@ class _ProfilePageState extends State<ProfilePage> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.more_horiz),
+                        trailing: TextButton.icon(
                           onPressed: () {
                             AutoRouter.of(context).push(RankingRoute());
                           },
+                          icon: Icon(
+                            Icons.more_horiz,
+                            size: 24.0,
+                            color: Color.fromRGBO(49, 220, 118, 1.0),
+                          ),
+                          label: Text(
+                            'Ver Ranking',
+                            style: TextStyle(
+                              color:  Color.fromRGBO(49, 220, 118, 1.0),
+                            ),
+                          ),
                         ),
                       ),
                       Container(
@@ -296,13 +309,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 35),
-                if (activities.length == 0) ...[
+                const SizedBox(height: 10),
+                if (activities?.length == 0) ...[
                   Text("No hay actividades registradas")
                 ],
                 Expanded(
                   child: ListView.separated(
-                    itemCount: activities.length,
+                    itemCount: activities!.length,
                     separatorBuilder: (context, index) => Divider(
                       color: Colors.grey,
                       thickness: 1,

@@ -8,9 +8,9 @@ class UserData {
 
   UserData.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    if (json['activities'] != null) {
+    if (json['user']['recent_activity'] != null) {
       activities = <Activity>[];
-      json['activities'].forEach((v) {
+      json['user']['recent_activity'].forEach((v) {
         activities!.add(new Activity.fromJson(v));
       });
     }
