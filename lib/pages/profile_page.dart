@@ -206,12 +206,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           icon: Icon(
                             Icons.more_horiz,
                             size: 24.0,
-                            color: Color.fromRGBO(49, 220, 118, 1.0),
+                            color: Color(0xFF0B1932),
                           ),
                           label: Text(
                             'Ver Ranking',
                             style: TextStyle(
-                              color:  Color.fromRGBO(49, 220, 118, 1.0),
+                              color: Color(0xFF0B1932),
                             ),
                           ),
                         ),
