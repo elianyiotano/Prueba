@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
@@ -243,15 +245,144 @@ class _SignUpState extends State<SignUp> {
                                       builder: (BuildContext context) =>
                                           AlertDialog(
                                         title: Text(
-                                            'Términos y política de privacidad '),
-                                        content: Text(
-                                          'Here you can display the terms and privacy policy.',
+                                            'Términos y política de privacidad'),
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Agradecemos tu interés en nuestra aplicación Jogo. La privacidad de tus datos personales es importante para nosotros. A continuación, te explicamos cómo recopilamos, utilizamos y protegemos la información que nos proporcionas.',
+                                                textAlign: TextAlign
+                                                    .justify, // justify the text
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Información que recopilamos:',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight
+                                                        .bold), // Bold title
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Nombre y apellido: Recopilamos esta información para personalizar tu experiencia dentro de la aplicación.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Correo electrónico: Solicitamos tu dirección de correo electrónico para enviar información relevante sobre promociones y novedades.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Número de teléfono (opcional): Si decides proporcionarnos tu número de teléfono, lo utilizaremos únicamente para enviar notificaciones relacionadas con los cupones y promociones que podrían ser de tu interés.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Uso de la información:',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Utilizamos tu nombre y apellido para personalizar tu experiencia dentro de la aplicación.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+
+                                              Text(
+                                                '• Tu dirección de correo electrónico se utiliza para enviarte información sobre promociones y novedades relacionadas con nuestros servicios.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Protección de la información:',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight
+                                                        .bold), // Bold title
+                                              ),
+                                              SizedBox(
+                                                  height:
+                                                      10), // Add some margin between title and text
+                                              Text(
+                                                '• Tomamos medidas de seguridad para proteger tus datos personales contra acceso no autorizado, pérdida o alteración.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Solo permitimos el acceso a tu información personal a aquellos empleados y colaboradores que necesiten conocerla para brindarte un mejor servicio.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Divulgación de la información:',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight
+                                                        .bold), // Bold title
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• No vendemos, intercambiamos ni transferimos tu información personal a terceros sin tu consentimiento, a menos que sea necesario para brindarte nuestros servicios o cumplir con las leyes aplicables.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Tus derechos:',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(
+                                                  height:
+                                                      10), // Add some margin between title and text
+                                              Text(
+                                                '• Tienes derecho a acceder, corregir o eliminar cualquier información personal que hayas proporcionado.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Si deseas modificar tus preferencias de comunicación o eliminar tus datos de nuestra base de datos, puedes contactarnos a través de los medios proporcionados al final de esta política.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Cambios en la política de privacidad:',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight
+                                                        .bold), // Bold title
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                '• Nos reservamos el derecho de modificar esta política de privacidad en cualquier momento. Cualquier cambio será notificado a través de nuestra aplicación o por correo electrónico.',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                'Contacto',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight
+                                                        .bold), // Bold title
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                'Correo electrónico:',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight
+                                                        .bold), // Bold title
+                                              ),
+                                              Text(
+                                                'contact@peppermind.io',
+                                                textAlign: TextAlign.justify,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         actions: [
                                           TextButton(
                                             onPressed: () =>
                                                 Navigator.pop(context),
-                                            child: Text('Close'),
+                                            child: Text('Cerrar'),
                                           ),
                                         ],
                                       ),
