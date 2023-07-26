@@ -61,13 +61,13 @@ class _CouponsPageState extends State<CouponsPage> {
                         textAlign: TextAlign.center,
                       )
                     : GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
                         ),
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
                         itemCount: coupons.length,
                         itemBuilder: (BuildContext context, int index) {
                           return _buildEventTile(coupons[index]);
@@ -92,7 +92,8 @@ class _CouponsPageState extends State<CouponsPage> {
         ),
         child: FutureBuilder<ImageProvider?>(
           future: loadImage(coupon.image),
-          builder: (BuildContext context, AsyncSnapshot<ImageProvider?> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<ImageProvider?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -110,7 +111,8 @@ class _CouponsPageState extends State<CouponsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(11.0),
                       image: DecorationImage(
-                        image: snapshot.data ?? AssetImage('assets/placeholder.png'),
+                        image: snapshot.data ??
+                            AssetImage('assets/placeholder.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -169,7 +171,8 @@ class _CouponsPageState extends State<CouponsPage> {
     if (imageUrl != null) {
       try {
         Dio dio = Dio();
-        Response response = await dio.get(imageUrl, options: Options(responseType: ResponseType.bytes));
+        Response response = await dio.get(imageUrl,
+            options: Options(responseType: ResponseType.bytes));
         return MemoryImage(response.data);
       } catch (e) {
         return null;
@@ -183,7 +186,7 @@ class _CouponsPageState extends State<CouponsPage> {
     if (true) {
       Response response = await CouponService().getList(context);
       dynamic res = response.data;
-      
+
       if (res is List) {
         coupons.clear();
         res.forEach((value) {
@@ -201,7 +204,8 @@ class _CouponsPageState extends State<CouponsPage> {
           builder: (BuildContext context) {
             return FailedModal(
               title: 'Ha ocurrido un error',
-              description: "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
+              description:
+                  "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
             );
           },
         );

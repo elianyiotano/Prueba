@@ -188,32 +188,33 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListTile(
-                        title: const Text(
-                          'Mis Puntos',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        trailing: TextButton.icon(
-                          onPressed: () {
-                            AutoRouter.of(context).push(RankingRoute());
-                          },
-                          icon: Icon(
-                            Icons.more_horiz,
-                            size: 24.0,
-                            color: Color(0xFF525E7B),
-                          ),
-                          label: Text(
-                            'Ver Ranking',
+                          title: const Text(
+                            'Mis Puntos',
                             style: TextStyle(
-                              color: Color(0xFF525E7B),
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                      ),
+                          trailing: TextButton(
+                            onPressed: () {
+                              AutoRouter.of(context).push(RankingRoute());
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<
+                                  Color>(const Color
+                                      .fromRGBO(49, 220, 118,
+                                  1.0)), // Cambiar el color del botón a verde
+                            ),
+                            child: Text(
+                              'Ver Ranking',
+                              style: TextStyle(
+                                color: Colors
+                                    .white, // Cambiar el color del texto a blanco (opcional)
+                              ),
+                            ),
+                          )),
                       Container(
                         margin: EdgeInsets.all(0),
                         padding: EdgeInsets.all(0),

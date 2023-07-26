@@ -67,7 +67,6 @@ class _EventsPageState extends State<EventsPage> {
                           mainAxisSpacing: 8.0,
                         ),
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
                         itemCount: events.length,
                         itemBuilder: (BuildContext context, int index) {
                           return _buildEventTile(events[index]);
