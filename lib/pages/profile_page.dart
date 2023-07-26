@@ -11,6 +11,7 @@ import 'package:jogo_mobile_app/widgets/failed_modal.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jogo_mobile_app/services/user.service.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -47,15 +48,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 _showChangeProfilePhotoModal(context);
               }
               if (value == 'logout') {
-                print("-------------------------------------------------");
-                print(MyApp.of(context).userData.user?.firstName);
-                print(MyApp.of(context).userData.activities?.length);
-                // var authService = MyApp.of(context).authService;
-                // authService.authenticated = false;
-                // authService.email = '';
-                // authService.token_auth == '';
+                var authService = MyApp.of(context).authService;
+                authService.authenticated = false;
+                authService.email = '';
+                authService.token_auth == '';
 
-                // AutoRouter.of(context).replace(SignInRoute());
+                AutoRouter.of(context).replace(SignInRoute());
               }
             },
             itemBuilder: (BuildContext context) {
@@ -206,12 +204,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           icon: Icon(
                             Icons.more_horiz,
                             size: 24.0,
-                            color: Color(0xFF0B1932),
+                            color: Color(0xFF525E7B),
                           ),
                           label: Text(
                             'Ver Ranking',
                             style: TextStyle(
-                              color: Color(0xFF0B1932),
+                              color: Color(0xFF525E7B),
                             ),
                           ),
                         ),
@@ -367,7 +365,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ]),
                                     SizedBox(height: 3),
                                     Text(
-                                      activity.date!,
+                                      _formatDate(activity.date!) ?? '',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey[600],
@@ -386,6 +384,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
     );
+  }
+
+  String? _formatDate(String? date) {
+    if (date != null) {
+      final dateTime = DateTime.parse(date);
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    }
+    return null;
   }
 
   void _showChangeProfilePhotoModal(BuildContext context) async {
