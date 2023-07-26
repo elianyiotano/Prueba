@@ -39,6 +39,7 @@ class User {
   String? category;
   String? referralCode;
   int? points;
+  int? targetPoints;
 
   User(
       {this.id,
@@ -50,7 +51,8 @@ class User {
       this.email,
       this.category,
       this.referralCode,
-      this.points});
+      this.points,
+      this.targetPoints});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -63,6 +65,7 @@ class User {
     category = json['category'];
     referralCode = json['referral_code'];
     points = json['points'];
+    targetPoints = json['target_points'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,6 +80,7 @@ class User {
     data['category'] = this.category;
     data['referral_code'] = this.referralCode;
     data['points'] = this.points;
+    data['target_points'] = this.targetPoints;
     return data;
   }
 }
