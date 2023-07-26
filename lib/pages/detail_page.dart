@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/coupon.dart';
 import 'package:intl/intl.dart';
@@ -49,7 +51,7 @@ class DetailPage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: EdgeInsets.symmetric(horizontal: 0),
                         child: Container(
                           height: 7,
                           decoration: BoxDecoration(
@@ -78,47 +80,50 @@ class DetailPage extends StatelessWidget {
                   SizedBox(height: 10),
                   Row(
                     children: [
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          decoration: BoxDecoration(
+                      Text(
+                        'Desde' ?? '',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(width: 10), // Adjust the spacing as needed
+                      Container(
+                        decoration: BoxDecoration(
                           color: const Color(0xFFDDFFD8),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4,
-                            horizontal: 8,
-                          ),
-                          child: Center(
-                            child: Text(
-                              _formatDate(coupon.validFrom) ?? '',
-                              style: TextStyle(
-                                color: Color(0xFF0F511D),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        child: Text(
+                          _formatDate(coupon.validFrom) ?? '',
+                          style: TextStyle(
+                            color: Color(0xFF0F511D),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFDDFFD8),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4,
-                            horizontal: 8,
-                          ),
-                          child: Center(
-                            child: Text(
-                              _formatDate(coupon.validUntil) ?? '',
-                              style: TextStyle(
-                                  color: Color(0xFF0F511D),
-                                  fontWeight: FontWeight.bold),
-                            ),
+                      SizedBox(width: 10), // Adjust the spacing as needed
+                      Text(
+                        'Valido hasta' ?? '',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(width: 10), // Adjust the spacing as needed
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDDFFD8),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        child: Text(
+                          _formatDate(coupon.validUntil) ?? '',
+                          style: TextStyle(
+                            color: Color(0xFF0F511D),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
                           ),
                         ),
                       ),
