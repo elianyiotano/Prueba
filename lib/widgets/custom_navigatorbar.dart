@@ -24,11 +24,11 @@ class CustomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
-          label: 'Cupones',
+          label: 'Descuentos',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications_active_outlined),
-          label: 'Notificaciones',
+          label: 'Mensajes',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person_2_outlined),

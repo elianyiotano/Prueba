@@ -31,11 +31,11 @@ class _NotificationPageState extends State<NotificationPage> {
               ),
             )
           : ListView(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(15.0),
               children: [
                 Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Text('Notificaciones',
+                    child: Text('Mensajes',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
@@ -91,7 +91,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Future<void> getMessage(BuildContext context) async {
     Response response = await MesageService().getList(context);
     dynamic res = response.data;
-    
+
     if (res is List) {
       DateTime currentDate = DateTime.now();
       String formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
@@ -117,7 +117,8 @@ class _NotificationPageState extends State<NotificationPage> {
         builder: (BuildContext context) {
           return FailedModal(
             title: 'Ha ocurrido un error',
-            description: "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
+            description:
+                "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
           );
         },
       );
@@ -230,9 +231,9 @@ class _NotificationCardState extends State<NotificationCard> {
 
   String _formatDateTime(DateTime dateTime) {
     if (dateTime.isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
-      return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+      return DateFormat('dd/MM/yyyy').format(dateTime);
     } else {
-      return '${dateTime.hour}:${dateTime.minute}';
+      return DateFormat('HH:mm').format(dateTime);
     }
   }
 }

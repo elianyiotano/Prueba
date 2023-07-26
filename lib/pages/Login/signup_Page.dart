@@ -17,6 +17,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formfield = GlobalKey<FormState>();
+  final FocusNode referralCodeFocusNode = FocusNode();
   bool passToggle = true;
   String? termsError;
   final TextEditingController emailController = TextEditingController();
@@ -33,6 +34,10 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFFAFAFA),
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -52,19 +57,7 @@ class _SignUpState extends State<SignUp> {
                     TabNavigationSignUp(),
                     const SizedBox(height: 20),
                     //referralCodeController
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: referralCodeController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: "Código de referencia",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    //NameController
+
                     TextFormField(
                       keyboardType: TextInputType.text,
                       controller: nameController,
@@ -190,6 +183,20 @@ class _SignUpState extends State<SignUp> {
                         }
                       },
                     ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: referralCodeController,
+                      focusNode: referralCodeFocusNode,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: "Código de activación",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    //NameController
                     const SizedBox(height: 20),
                     //Accept Terms and policy
                     Container(
@@ -488,10 +495,10 @@ class _SignUpState extends State<SignUp> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
+              referralCodeFocusNode.requestFocus();
               return FailedModal(
                 title: 'Error en el envío',
-                description:
-                    "Por favor verifique su conexión a internet y que la información proporcionada sea correcta. Vuelva a intentar. ",
+                description: "Código de activación invalido",
               );
             },
           );
