@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_mobile_app/main.dart';
 import 'package:jogo_mobile_app/models/activity.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/routes.gr.dart';
@@ -43,12 +44,24 @@ class _ProfilePageState extends State<ProfilePage> {
               if (value == 'photo') {
                 _showChangeProfilePhotoModal(context);
               }
+              if (value == 'logout') {
+                var authService = MyApp.of(context).authService;
+                authService.authenticated = false;
+                authService.email = '';
+                authService.token_auth == '';
+
+                AutoRouter.of(context).replace(SignInRoute());
+              }
             },
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem<String>(
                   value: 'photo',
-                  child: Text('Editar foto'),
+                  child: Text('Editar Foto'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Text('Cerrar Sesión'),
                 ),
               ];
             },
