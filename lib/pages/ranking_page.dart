@@ -31,18 +31,11 @@ class _RankingPageState extends State<RankingPage> {
           },
           color: Colors.green,
         ),
-        title: const Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Clasificación',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-          ],
+        title: const Text(
+          'Clasificación',
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -56,25 +49,34 @@ class _RankingPageState extends State<RankingPage> {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (users.length == 0) ...[
+                if (users.length == 0)
                   Text(
                     "No hay un ranking disponible",
                     textAlign: TextAlign.center,
-                  )
-                ],
+                  ),
                 Expanded(
                   child: ListView.separated(
                     itemCount: users.length,
                     separatorBuilder: (context, index) => Divider(),
                     itemBuilder: (context, index) {
                       final user = users[index];
+                      // Formateamos el índice con un tamaño fijo de dos caracteres
+                      final formattedIndex =
+                          '${(index + 1).toString().padLeft(2, '0')}';
                       return ListTile(
                         leading: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              '${index + 1}.',
-                              style: TextStyle(color: Colors.black),
+                            Container(
+                              width:
+                                  40, // Ancho del índice para que sea uniforme
+                              child: Text(
+                                '$formattedIndex.',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'monospace'), // Usamos una fuente de ancho fijo (monospace)
+                              ),
                             ),
                             SizedBox(width: 8),
                             CircleAvatar(
@@ -91,39 +93,6 @@ class _RankingPageState extends State<RankingPage> {
                             color: Colors.black,
                           ),
                         ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 4),
-                            // Text(
-                            //   '${user.points ?? ''} Pts',
-                            //   style: TextStyle(color: Colors.black),
-                            // ),
-                          ],
-                        ),
-                        // trailing: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.end,
-                        //   children: [
-                        //     SizedBox(height: 4),
-                            // Text(
-                            //   'Tipo',
-                            //   style: TextStyle(
-                            //     fontSize: Theme.of(context)
-                            //         .textTheme
-                            //         .subtitle1!
-                            //         .fontSize,
-                            //     color: Color.fromARGB(255, 57, 56, 56),
-                            //   ),
-                            // ),
-                            // SizedBox(height: 4),
-                            // Text(
-                            //   user.category ?? '',
-                            //   style: TextStyle(
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                          // ],
-                        // ),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       );
@@ -141,7 +110,7 @@ class _RankingPageState extends State<RankingPage> {
     if (true) {
       Response response = await UserService().ranking(context);
       dynamic res = response.data;
-     
+
       if (res is List) {
         users.clear();
         res.forEach((value) {
@@ -158,7 +127,8 @@ class _RankingPageState extends State<RankingPage> {
           builder: (BuildContext context) {
             return FailedModal(
               title: 'Ha ocurrido un error',
-              description: "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
+              description:
+                  "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
             );
           },
         );
