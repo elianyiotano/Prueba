@@ -113,24 +113,24 @@ class _CouponsPageState extends State<CouponsPage> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 8.0,
-                    left: 8.0,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 2, 49, 87),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Text(
-                        "${_formatDate(coupon.validFrom)}" ?? '',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 8.0,
+                  //   left: 8.0,
+                  //   child: Container(
+                  //     padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  //     decoration: BoxDecoration(
+                  //       color: const Color.fromARGB(255, 2, 49, 87),
+                  //       borderRadius: BorderRadius.circular(16.0),
+                  //     ),
+                  //     child: Text(
+                  //       "${_formatDate(coupon.validFrom)}" ?? '',
+                  //       style: const TextStyle(
+                  //         color: Colors.white,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned(
                     bottom: 8.0,
                     right: 8.0,
