@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_mobile_app/models/user.dart';
 import 'package:jogo_mobile_app/pages/coupons_page.dart';
+import 'package:jogo_mobile_app/pages/events_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
 import 'package:jogo_mobile_app/providers/ui_providers.dart';
@@ -38,7 +39,7 @@ class _HomePageBody extends StatelessWidget {
 
     switch (currentIndex) {
       case 0:
-        return CouponsPage();
+        return EventsPage();
       case 1:
         return CouponsPage();
       case 2:

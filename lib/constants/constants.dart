@@ -10,6 +10,8 @@ class ApiConstants {
   static String getListCoupons = '/coupons';
   static String postQr = '/coupons/validate';
 
+  static String getListEvents = '/events';
+
   static String getRanking = '/users/ranking';
 
   static String getPhoto = '/users/profile_photo';

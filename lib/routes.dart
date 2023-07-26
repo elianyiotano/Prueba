@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:jogo_mobile_app/pages/Login/signin_page.dart';
 import 'package:jogo_mobile_app/pages/Login/signup_Page.dart';
+import 'package:jogo_mobile_app/pages/detailEvent_page.dart';
 import 'package:jogo_mobile_app/pages/detail_page.dart';
+import 'package:jogo_mobile_app/pages/events_page.dart';
 import 'package:jogo_mobile_app/pages/home_page.dart';
 import 'package:jogo_mobile_app/pages/notification_page.dart';
 import 'package:jogo_mobile_app/pages/profile_page.dart';
@@ -49,6 +51,18 @@ import 'package:jogo_mobile_app/routes.guard.dart';
       page: RankingPage,
       name: 'RankingRoute',
       path: '/ranking',
+      guards: [RouteGuard],
+    ),
+    AutoRoute(
+      page: EventsPage,
+      name: 'EventRoute',
+      path: '/event',
+      guards: [RouteGuard],
+    ),
+     AutoRoute(
+      page: DetailEventPage,
+      name: 'DetailEventRoute',
+      path: '/detail',
       guards: [RouteGuard],
     ),
   ],
