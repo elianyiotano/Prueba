@@ -81,7 +81,7 @@ class DetailPage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Desde' ?? '',
+                        'Valido desde' ?? '',
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -105,7 +105,7 @@ class DetailPage extends StatelessWidget {
                       ),
                       SizedBox(width: 10), // Adjust the spacing as needed
                       Text(
-                        'Valido hasta' ?? '',
+                        'Hasta' ?? '',
                         style: TextStyle(
                           color: Colors.black,
                         ),

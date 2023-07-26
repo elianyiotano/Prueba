@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -141,7 +143,7 @@ class _CouponsPageState extends State<CouponsPage> {
                         borderRadius: BorderRadius.circular(11.0),
                       ),
                       child: Text(
-                        coupon.name ?? '',
+                        '' ?? '',
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

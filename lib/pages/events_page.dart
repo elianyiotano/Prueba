@@ -60,7 +60,8 @@ class _EventsPageState extends State<EventsPage> {
                         textAlign: TextAlign.center,
                       )
                     : GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
@@ -91,7 +92,8 @@ class _EventsPageState extends State<EventsPage> {
         ),
         child: FutureBuilder<ImageProvider?>(
           future: loadImage(event.image),
-          builder: (BuildContext context, AsyncSnapshot<ImageProvider?> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<ImageProvider?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -109,7 +111,8 @@ class _EventsPageState extends State<EventsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(11.0),
                       image: DecorationImage(
-                        image: snapshot.data ?? AssetImage('assets/placeholder.png'),
+                        image: snapshot.data ??
+                            AssetImage('assets/placeholder.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -141,9 +144,9 @@ class _EventsPageState extends State<EventsPage> {
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(11.0),
                       ),
-                      child: Text(
-                        event.name ?? '',
-                        style: const TextStyle(
+                      child: const Text(
+                        '' ?? '',
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -168,7 +171,8 @@ class _EventsPageState extends State<EventsPage> {
     if (imageUrl != null) {
       try {
         Dio dio = Dio();
-        Response response = await dio.get(imageUrl, options: Options(responseType: ResponseType.bytes));
+        Response response = await dio.get(imageUrl,
+            options: Options(responseType: ResponseType.bytes));
         return MemoryImage(response.data);
       } catch (e) {
         return null;
@@ -182,7 +186,7 @@ class _EventsPageState extends State<EventsPage> {
     if (true) {
       Response response = await EventService().getList(context);
       dynamic res = response.data;
-      
+
       if (res is List) {
         events.clear();
         res.forEach((value) {
@@ -200,7 +204,8 @@ class _EventsPageState extends State<EventsPage> {
           builder: (BuildContext context) {
             return FailedModal(
               title: 'Ha ocurrido un error',
-              description: "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
+              description:
+                  "Por favor verifique su conexión a internet y vuelva a iniciar sesión. ",
             );
           },
         );

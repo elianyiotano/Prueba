@@ -291,7 +291,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -307,7 +307,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 if (activities?.length == 0) ...[
                   Text("No hay actividades registradas")
                 ],
@@ -338,7 +338,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 15),
                             Expanded(
                               child: SingleChildScrollView(
                                 child: Column(
