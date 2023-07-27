@@ -312,9 +312,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const SizedBox(height: 15),
+                  if (activities?.length == 0) ...[
+                    Text("No hay actividades registradas")
+                  ],
+                  const SizedBox(height: 15),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *
-                        0.2, // Cambio aquí: Limitar el alto del ListView de actividades
+                    height: MediaQuery.of(context).size.height * 0.2,
                     child: ListView.separated(
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
